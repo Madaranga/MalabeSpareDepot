@@ -1,5 +1,9 @@
 package com.example.malabesparedepot;
 
+import com.example.malabesparedepot.model.Part;
+import com.example.malabesparedepot.util.DataParser;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -9,8 +13,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TableView;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+
 
 public class MainController {
+
+    private List<Part> masterInventory = new ArrayList<>();
+
     //TAB 1
     @FXML private TextField searchField;
     @FXML private ComboBox<String> categoryFilter;
@@ -41,10 +54,37 @@ public class MainController {
 
 
 
+
+
     //Initialization
     @FXML
     public void initialize() {
-        System.out.println("Main Controller initialized successfully");
+        System.out.println("MainController initialized successfully");
+        //Load data
+        masterInventory = DataParser.parseInventory("inventory_legacy.txt");
+        if (masterInventory.isEmpty()) {
+            System.err.println("!! Inventory empty or not found !!!");
+            return;
+        }
+
+        //Extract unique categories
+        Set<String> categories = new HashSet<>();
+        List<String> partNamesForCart = new ArrayList<>();
+
+        for (Part part : masterInventory) {
+            categories.add(part.getCategory());
+            partNamesForCart.add(part.getName() + " - " + part.getName() );
+        }
+
+        //Populate tab 1 and tab 2 category ComboBoxes
+        ObservableList<String> categoryOptions = FXCollections.observableArrayList(categories);
+        categoryFilter.setItems(categoryOptions);
+        cmbCategory.setItems(categoryOptions);
+
+        //Add an "All Categories"
+        categoryFilter.getItems().add(0,"All Categories");
+        categoryFilter.getSelectionModel().selectFirst();
+
     }
 
     //TAB 1 - Dashboard

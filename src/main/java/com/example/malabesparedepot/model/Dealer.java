@@ -23,10 +23,12 @@ public class Dealer {
     }
 
     public String getPhoneNumber() {
+
         return phoneNumber;
     }
 
     public String getLocation() {
+
         return location;
     }
 }

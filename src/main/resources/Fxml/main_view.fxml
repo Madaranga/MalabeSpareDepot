@@ -22,26 +22,26 @@
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <TextField prefHeight="26.0" prefWidth="170.0" promptText="Search by Name or Brand . . ." />
-                              <ComboBox prefWidth="150.0" />
-                              <Button mnemonicParsing="false" text="Search" />
+                              <TextField fx:id="searchField" prefHeight="26.0" prefWidth="170.0" promptText="Search by Name or Brand . . ." />
+                              <ComboBox fx:id="categoryFilter" prefWidth="150.0" />
+                              <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#onSearch" text="Search" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                            <children>
-                              <Label text="Total Inventory Value: Rs. 0.00" />
-                              <Label text="Total Parts: 0" />
+                              <Label fx:id="lblTotalValue" text="Total Inventory Value: Rs. 0.00" />
+                              <Label fx:id="lblTotalParts" text="Total Parts: 0" />
                            </children>
                         </HBox>
-                        <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="inventoryTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Part Code" />
-                            <TableColumn prefWidth="75.0" text="Name" />
-                              <TableColumn prefWidth="75.0" text="Brand" />
-                              <TableColumn prefWidth="75.0" text="Price (Rs. )" />
-                              <TableColumn prefWidth="75.0" text="Quantity" />
-                              <TableColumn prefWidth="75.0" text="Category" />
-                              <TableColumn prefWidth="75.0" text="Date Added" />
+                            <TableColumn fx:id="colPartCode" prefWidth="75.0" text="Part Code" />
+                            <TableColumn fx:id="colName" prefWidth="75.0" text="Name" />
+                              <TableColumn fx:id="colBrand" prefWidth="75.0" text="Brand" />
+                              <TableColumn fx:id="colPrice" prefWidth="75.0" text="Price (Rs. )" />
+                              <TableColumn fx:id="colQty" prefWidth="75.0" text="Quantity" />
+                              <TableColumn fx:id="colCategory" prefWidth="75.0" text="Category" />
+                              <TableColumn fx:id="colDateAdded" prefWidth="75.0" text="Date Added" />
                           </columns>
                         </TableView>
                      </children>

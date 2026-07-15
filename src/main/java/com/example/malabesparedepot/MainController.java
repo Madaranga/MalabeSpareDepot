@@ -12,4 +12,10 @@ public class MainController {
     public void initialize() {
         System.out.println("MainController initialized successfully");
     }
+
+    @FXML
+    void onSearch() {
+        System.out.println("Search button clicked!");
+    }
+
 }

@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -15,33 +16,30 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-         prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1"
-         xmlns="http://javafx.com/javafx/26" fx:controller="com.example.malabesparedepot.MainController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.malabesparedepot.MainController">
     <Tab text="Inventory Dashboard">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             <VBox prefHeight="375.0" prefWidth="600.0">
                 <HBox prefHeight="100.0" prefWidth="200.0">
-                    <TextField fx:id="searchField" prefHeight="26.0" prefWidth="170.0"
-                               promptText="Search by Name or Brand . . ."/>
-                    <ComboBox fx:id="categoryFilter" prefWidth="150.0"/>
-                    <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#onSearch"
-                            text="Search"/>
+                    <TextField fx:id="searchField" prefHeight="26.0" prefWidth="170.0" promptText="Search by Name or Brand . . ." />
+                    <ComboBox fx:id="categoryFilter" prefWidth="150.0" />
+                    <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#onSearch" text="Search" />
                 </HBox>
                 <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                    <Label fx:id="lblTotalValue" text="Total Inventory Value: Rs. 0.00"/>
-                    <Label fx:id="lblTotalParts" text="Total Parts: 0"/>
+                    <Label fx:id="lblTotalValue" text="Total Inventory Value: Rs. 0.00" />
+                    <Label fx:id="lblTotalParts" text="Total Parts: 0" />
                 </HBox>
                 <TableView fx:id="inventoryTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colPartCode" prefWidth="75.0" text="Part Code"/>
-                        <TableColumn fx:id="colName" prefWidth="75.0" text="Name"/>
-                        <TableColumn fx:id="colBrand" prefWidth="75.0" text="Brand"/>
-                        <TableColumn fx:id="colPrice" prefWidth="75.0" text="Price (Rs. )"/>
-                        <TableColumn fx:id="colQty" prefWidth="75.0" text="Quantity"/>
-                        <TableColumn fx:id="colCategory" prefWidth="75.0" text="Category"/>
-                        <TableColumn fx:id="colDateAdded" prefWidth="75.0" text="Date Added"/>
+                        <TableColumn fx:id="colPartCode" prefWidth="75.0" text="Part Code" />
+                        <TableColumn fx:id="colName" prefWidth="75.0" text="Name" />
+                        <TableColumn fx:id="colBrand" prefWidth="75.0" text="Brand" />
+                        <TableColumn fx:id="colPrice" prefWidth="75.0" text="Price (Rs. )" />
+                        <TableColumn fx:id="colQty" prefWidth="75.0" text="Quantity" />
+                        <TableColumn fx:id="colCategory" prefWidth="75.0" text="Category" />
+                        <TableColumn fx:id="colDateAdded" prefWidth="75.0" text="Date Added" />
                     </columns>
                 </TableView>
             </VBox>
@@ -49,50 +47,95 @@
     </Tab>
     <Tab text="Manage Items">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-            <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <GridPane>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </padding>
-                    <Label text="Part Code:"/>
-                    <Label text="Part Name:" GridPane.rowIndex="1"/>
-                    <Label text="Brand:" GridPane.rowIndex="2"/>
-                    <Label text="Price (Rs. ):" GridPane.rowIndex="3"/>
-                    <Label text="Quantity:" GridPane.rowIndex="4"/>
-                    <Label text="Category:" GridPane.rowIndex="5"/>
-                    <TextField fx:id="txtPartCode" GridPane.columnIndex="1"/>
-                    <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                    <TextField fx:id="txtBrand" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                    <TextField fx:id="txtPrice" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                    <TextField fx:id="txtQty" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                    <ComboBox fx:id="cmbCategory" prefWidth="150.0" GridPane.columnIndex="1"
-                              GridPane.rowIndex="5"/>
+                    <Label text="Part Code:" />
+                    <Label text="Part Name:" GridPane.rowIndex="1" />
+                    <Label text="Brand:" GridPane.rowIndex="2" />
+                    <Label text="Price (Rs. ):" GridPane.rowIndex="3" />
+                    <Label text="Quantity:" GridPane.rowIndex="4" />
+                    <Label text="Category:" GridPane.rowIndex="5" />
+                    <TextField fx:id="txtPartCode" GridPane.columnIndex="1" />
+                    <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <TextField fx:id="txtBrand" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <TextField fx:id="txtPrice" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <TextField fx:id="txtQty" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <ComboBox fx:id="cmbCategory" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 </GridPane>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
-                    <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#onAddPart"
-                            text="Add Part"/>
-                    <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#onUpdateStock"
-                            text="Update Stock"/>
-                    <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#onDeletePart"
-                            text="Delete Part"/>
+                    <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#onAddPart" text="Add Part" />
+                    <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#onUpdateStock" text="Update Stock" />
+                    <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#onDeletePart" text="Delete Part" />
                 </HBox>
             </VBox>
         </AnchorPane>
     </Tab>
     <Tab text="Checkout &amp; Dealers">
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         <children>
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                  <VBox prefHeight="370.0" prefWidth="167.0" spacing="15.0">
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                     <children>
+                        <Label text="Add Items to Cart">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Select Part:" />
+                        <ComboBox fx:id="cmbCartPart" prefWidth="150.0" />
+                        <Label text="Quantity:" />
+                        <TextField fx:id="txtCartQty" />
+                        <Button fx:id="btnAddToCart" mnemonicParsing="false" onAction="#onAddToCart" text="Add to cart" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0">
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                     <children>
+                        <Label text="Active Cart">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tblCart" prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="Part Name" />
+                            <TableColumn prefWidth="75.0" text="Qty" />
+                              <TableColumn prefWidth="75.0" text="Subtotal" />
+                          </columns>
+                        </TableView>
+                        <Label text="Select Dealer" />
+                        <ComboBox fx:id="cmbDealer" prefWidth="150.0" />
+                        <Label fx:id="lblTotal" text="Total: Rs. 0.00">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="btnCheckout" mnemonicParsing="false" onAction="#onCheckout" text="Process Checkout" />
+                     </children>
+                  </VBox>
+              </items>
+            </SplitPane>
+         </children></AnchorPane>
     </Tab>
 </TabPane>

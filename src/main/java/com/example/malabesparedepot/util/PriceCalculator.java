@@ -1,4 +1,4 @@
-package com.example.malabesparedepot.model;
+package com.example.malabesparedepot.util;
 
 import com.example.malabesparedepot.model.CartItem;
 import java.util.List;

@@ -85,6 +85,11 @@ public class MainController {
         categoryFilter.getItems().add(0,"All Categories");
         categoryFilter.getSelectionModel().selectFirst();
 
+
+        //Populate Tab 3 Cart Parts ComboBox
+        ObservableList<String> partOptions = FXCollections.observableArrayList(partNamesForCart);
+        cmbCartPart.setItems(partOptions);
+
     }
 
     //TAB 1 - Dashboard

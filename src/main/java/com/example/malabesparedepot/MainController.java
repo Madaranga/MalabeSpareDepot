@@ -90,6 +90,12 @@ public class MainController {
         ObservableList<String> partOptions = FXCollections.observableArrayList(partNamesForCart);
         cmbCartPart.setItems(partOptions);
 
+        //Populate Dealer sample list for testing
+        cmbDealer.setItems(FXCollections.observableArrayList("Retail Customer", "Authorized Dealer (10% Disc)", "Wholesale Partner (15% Disc)"));
+        cmbCartPart.getSelectionModel().selectFirst();
+
+        System.out.println("Data bindings successfully synchronized to UI elements!!!");
+
     }
 
     //TAB 1 - Dashboard

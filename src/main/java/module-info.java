@@ -4,5 +4,6 @@ module com.example.malabesparedepot {
 
 
     opens com.example.malabesparedepot to javafx.fxml;
+    opens com.example.malabesparedepot.model to javafx.base;
     exports com.example.malabesparedepot;
 }

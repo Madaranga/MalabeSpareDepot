@@ -6,11 +6,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
@@ -28,6 +26,15 @@ public class MainController {
     @FXML private TextField searchField;
     @FXML private ComboBox<String> categoryFilter;
     @FXML private Button btnSearch;
+
+    @FXML private TableView<Part> tblDashboard;
+    @FXML private TableColumn<Part, String> colDashCode;
+    @FXML private TableColumn<Part, String> colDashName;
+    @FXML private TableColumn<Part, String> colDashBrand;
+    @FXML private TableColumn<Part, Double> colDashPrice;
+    @FXML private TableColumn<Part, Integer> colDashQty;
+    @FXML private TableColumn<Part, String> colDashCategory;
+    @FXML private TableColumn<Part, String> colDashDate;
 
     //TAB 2
     @FXML private TextField txtPartCode;
@@ -95,6 +102,19 @@ public class MainController {
         cmbCartPart.getSelectionModel().selectFirst();
 
         System.out.println("Data bindings successfully synchronized to UI elements!!!");
+
+
+        //Map custom table columns to Part properties
+        colDashCode.setCellValueFactory(new PropertyValueFactory<>("partCode"));
+        colDashName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colDashBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        colDashPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colDashQty.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colDashCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        colDashDate.setCellValueFactory(new PropertyValueFactory<>("dateAdded"));
+
+        //push data into table on app
+        tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
 
     }
 

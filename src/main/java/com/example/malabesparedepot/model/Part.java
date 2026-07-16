@@ -23,32 +23,26 @@ public class Part {
 
     // Getters
     public String getPartCode() {
-
         return partCode;
     }
 
     public String getName() {
-
         return name;
     }
 
     public String getBrand() {
-
         return brand;
     }
 
     public double getPrice() {
-
         return price;
     }
 
     public int getQuantity() {
-
         return quantity;
     }
 
     public String getCategory() {
-
         return category;
     }
 
@@ -57,7 +51,6 @@ public class Part {
     }
 
     public String getImagePath() {
-
         return imagePath;
     }
 

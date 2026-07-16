@@ -101,7 +101,27 @@ public class MainController {
     //TAB 1 - Dashboard
     @FXML
     void onSearch() {
-        System.out.println("Search Button clicked!");
+        String query = searchField.getText().trim().toLowerCase();
+        String selectedCategory = categoryFilter.getValue();
+
+        System.out.println("Filtering inventory for: " + query + " in category: [" + selectedCategory + "]");
+
+        //Loop through our master inventory list and find matches
+        for (Part part : masterInventory) {
+            boolean matchesSearch = part.getName().toLowerCase().contains(query) ||
+                                    part.getPartCode().toLowerCase().contains(query);
+
+            boolean matchesCategory = selectedCategory == null ||
+                                      selectedCategory.equals("All Categories") ||
+                                      part.getCategory().equalsIgnoreCase(selectedCategory);
+
+
+            if (matchesSearch && matchesCategory) {
+                System.out.println("Found matches: " + part.getName() + " (" + part.getPartCode() + ")");
+            }
+        }
+
+
     }
 
 

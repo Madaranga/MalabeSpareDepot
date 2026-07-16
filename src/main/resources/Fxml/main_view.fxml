@@ -31,15 +31,15 @@
                     <Label fx:id="lblTotalValue" text="Total Inventory Value: Rs. 0.00" />
                     <Label fx:id="lblTotalParts" text="Total Parts: 0" />
                 </HBox>
-                <TableView fx:id="inventoryTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tblDashboard" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colPartCode" prefWidth="75.0" text="Part Code" />
-                        <TableColumn fx:id="colName" prefWidth="75.0" text="Name" />
-                        <TableColumn fx:id="colBrand" prefWidth="75.0" text="Brand" />
-                        <TableColumn fx:id="colPrice" prefWidth="75.0" text="Price (Rs. )" />
-                        <TableColumn fx:id="colQty" prefWidth="75.0" text="Quantity" />
-                        <TableColumn fx:id="colCategory" prefWidth="75.0" text="Category" />
-                        <TableColumn fx:id="colDateAdded" prefWidth="75.0" text="Date Added" />
+                        <TableColumn fx:id="colDashCode" prefWidth="75.0" text="Part Code" />
+                        <TableColumn fx:id="colDashName" prefWidth="75.0" text="Name" />
+                        <TableColumn fx:id="colDashBrand" prefWidth="75.0" text="Brand" />
+                        <TableColumn fx:id="colDashPrice" prefWidth="75.0" text="Price (Rs. )" />
+                        <TableColumn fx:id="colDashQty" prefWidth="75.0" text="Quantity" />
+                        <TableColumn fx:id="colDashCategory" prefWidth="75.0" text="Category" />
+                        <TableColumn fx:id="colDashDate" prefWidth="75.0" text="Date Added" />
                     </columns>
                 </TableView>
             </VBox>
@@ -87,48 +87,46 @@
     </Tab>
     <Tab text="Checkout &amp; Dealers">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
-                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <VBox prefHeight="370.0" prefWidth="167.0" spacing="15.0">
                     <padding>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                     </padding>
                     <Label text="Add Items to Cart">
                         <font>
-                            <Font name="System Bold" size="14.0"/>
+                            <Font name="System Bold" size="14.0" />
                         </font>
                     </Label>
-                    <Label text="Select Part:"/>
-                    <ComboBox fx:id="cmbCartPart" prefWidth="150.0"/>
-                    <Label text="Quantity:"/>
-                    <TextField fx:id="txtCartQty"/>
-                    <Button fx:id="btnAddToCart" mnemonicParsing="false" onAction="#onAddToCart" text="Add to cart"/>
+                    <Label text="Select Part:" />
+                    <ComboBox fx:id="cmbCartPart" prefWidth="150.0" />
+                    <Label text="Quantity:" />
+                    <TextField fx:id="txtCartQty" />
+                    <Button fx:id="btnAddToCart" mnemonicParsing="false" onAction="#onAddToCart" text="Add to cart" />
                 </VBox>
                 <VBox prefHeight="200.0" prefWidth="100.0" spacing="15.0">
                     <padding>
-                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                     </padding>
                     <Label text="Active Cart">
                         <font>
-                            <Font name="System Bold" size="14.0"/>
+                            <Font name="System Bold" size="14.0" />
                         </font>
                     </Label>
                     <TableView fx:id="tblCart" prefHeight="200.0" prefWidth="200.0">
                         <columns>
-                            <TableColumn prefWidth="75.0" text="Part Name"/>
-                            <TableColumn prefWidth="75.0" text="Qty"/>
-                            <TableColumn prefWidth="75.0" text="Subtotal"/>
+                            <TableColumn prefWidth="75.0" text="Part Name" />
+                            <TableColumn prefWidth="75.0" text="Qty" />
+                            <TableColumn prefWidth="75.0" text="Subtotal" />
                         </columns>
                     </TableView>
-                    <Label text="Select Dealer"/>
-                    <ComboBox fx:id="cmbDealer" prefWidth="150.0"/>
+                    <Label text="Select Dealer" />
+                    <ComboBox fx:id="cmbDealer" prefWidth="150.0" />
                     <Label fx:id="lblTotal" text="Total: Rs. 0.00">
                         <font>
-                            <Font name="System Bold" size="18.0"/>
+                            <Font name="System Bold" size="18.0" />
                         </font>
                     </Label>
-                    <Button fx:id="btnCheckout" mnemonicParsing="false" onAction="#onCheckout"
-                            text="Process Checkout"/>
+                    <Button fx:id="btnCheckout" mnemonicParsing="false" onAction="#onCheckout" text="Process Checkout" />
                 </VBox>
             </SplitPane>
         </AnchorPane>

@@ -116,8 +116,12 @@ public class MainController {
 
         //push data into table on app
         tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
-
         updateDashboardSummary(masterInventory);  //calculation labels,refresh UI text
+
+        categoryFilter.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            onSearch();
+        });
+
     }
 
     //TAB 1 - Dashboard
@@ -126,7 +130,30 @@ public class MainController {
         String query = searchField.getText().trim().toLowerCase();
         String selectedCategory = categoryFilter.getValue();
 
-        System.out.println("Filtering inventory for: " + query + " in category: [" + selectedCategory + "]");
+        //Create a new list to collect only matching items
+        ObservableList<Part> filteredList = FXCollections.observableArrayList();
+
+        //Loop through master inventory and find matches
+        for (Part part : masterInventory) {
+            //query is empty OR matches name/brand/code
+            boolean matchesSearch = query.isEmpty() ||
+                                    part.getName().toLowerCase().contains(query) ||
+                                    part.getBrand().toLowerCase().contains(query) ||
+                                    part.getPartCode().toLowerCase().contains(query);
+
+            //Matches if category selected
+            boolean matchesCategory = selectedCategory == null ||
+                                      selectedCategory.equals("All Categories") ||
+                                      part.getCategory().equalsIgnoreCase(selectedCategory);
+            if (matchesSearch && matchesCategory) {
+                filteredList.add(part);
+            }
+        }
+
+
+
+
+
 
         //Loop through our master inventory list and find matches
         for (Part part : masterInventory) {
@@ -142,9 +169,12 @@ public class MainController {
                 System.out.println("Found matches: " + part.getName() + " (" + part.getPartCode() + ")");
             }
         }
+        tblDashboard.setItems(filteredList);
+        updateDashboardSummary(filteredList);
 
 
     }
+
 
 
 

@@ -36,6 +36,9 @@ public class MainController {
     @FXML private TableColumn<Part, String> colDashCategory;
     @FXML private TableColumn<Part, String> colDashDate;
 
+    @FXML private Label lblTotalValue;
+    @FXML private Label lblTotalParts;
+
     //TAB 2
     @FXML private TextField txtPartCode;
     @FXML private TextField txtName;
@@ -116,6 +119,7 @@ public class MainController {
         //push data into table on app
         tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
 
+        updateDashboardSummary(masterInventory);  //calculation labels,refresh UI text
     }
 
     //TAB 1 - Dashboard
@@ -174,5 +178,22 @@ public class MainController {
     void onCheckout() {
         System.out.println("Process Checkout Button clicked!");
     }
+
+
+    //Calculation - labels
+    private void updateDashboardSummary(List<Part> currentList) {
+        int totalPartsCount = 0;
+        double totalInventoryValue = 0.0;
+
+        for (Part part : currentList) {
+            totalPartsCount += part.getQuantity();
+            totalInventoryValue += (part.getPrice() * part.getQuantity());
+        }
+
+        //refresh the UI text
+        lblTotalValue.setText(String.format("Total Inventory Value: %.2f", totalInventoryValue));
+        lblTotalParts.setText("Total Parts: " + totalPartsCount);
+    }
+
 
 }

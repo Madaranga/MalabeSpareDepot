@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -34,11 +35,11 @@
                 <TableView fx:id="tblDashboard" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colDashCode" prefWidth="75.0" text="Part Code" />
-                        <TableColumn fx:id="colDashName" prefWidth="75.0" text="Name" />
-                        <TableColumn fx:id="colDashBrand" prefWidth="75.0" text="Brand" />
-                        <TableColumn fx:id="colDashPrice" prefWidth="75.0" text="Price (Rs. )" />
-                        <TableColumn fx:id="colDashQty" prefWidth="75.0" text="Quantity" />
-                        <TableColumn fx:id="colDashCategory" prefWidth="75.0" text="Category" />
+                        <TableColumn fx:id="colDashName" prefWidth="152.79998779296875" text="Name" />
+                        <TableColumn fx:id="colDashBrand" prefWidth="75.20002746582031" text="Brand" />
+                        <TableColumn fx:id="colDashPrice" prefWidth="88.0" text="Price (Rs. )" />
+                        <TableColumn fx:id="colDashQty" minWidth="0.0" prefWidth="73.5999755859375" text="Quantity" />
+                        <TableColumn fx:id="colDashCategory" prefWidth="93.60003662109375" text="Category" />
                     </columns>
                 </TableView>
             </VBox>
@@ -47,7 +48,7 @@
     <Tab text="Manage Items">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <GridPane>
+                <GridPane prefWidth="600.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -59,6 +60,8 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -75,6 +78,13 @@
                     <TextField fx:id="txtPrice" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                     <TextField fx:id="txtQty" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     <ComboBox fx:id="cmbCategory" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+               <Label text="Part Image" GridPane.rowIndex="6" />
+               <Button mnemonicParsing="false" onAction="#onBrowseImage" text="Browse Image" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+               <ImageView fx:id="imgPreview" fitHeight="70.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <GridPane.margin>
+                     <Insets />
+                  </GridPane.margin>
+               </ImageView>
                 </GridPane>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                     <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#onAddPart" text="Add Part" />

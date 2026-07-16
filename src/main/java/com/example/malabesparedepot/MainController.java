@@ -5,9 +5,11 @@ import com.example.malabesparedepot.util.DataParser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,6 +47,8 @@ public class MainController {
     @FXML private TextField txtPrice;
     @FXML private TextField txtQty;
     @FXML private ComboBox<String> cmbCategory;
+    @FXML private ImageView imgPreview;
+    private String selectedImagePath = "placeholder.png"; //default fallback
 
 
     @FXML private Button btnAdd;
@@ -175,24 +179,118 @@ public class MainController {
 
     }
 
+    private void clearManageFields() {
+        txtPartCode.clear();
+        txtName.clear();
+        txtBrand.clear();
+        txtPrice.clear();
+        txtQty.clear();
+        cmbCategory.getSelectionModel().clearSelection();
+
+        imgPreview.setImage(null);
+        selectedImagePath = "placeholder.png";
+    }
+
+
+
+
+
 
 
 
     //TAB 2 - Manage Items
     @FXML
     void onAddPart() {
-        System.out.println("Add Part Button clicked!");
+        Part newPart = getPartFromFields();
+        if (newPart == null) return;
+
+        //check for duplicate part code
+        for (Part p : masterInventory) {
+            if (p.getPartCode().equalsIgnoreCase(newPart.getPartCode())) {
+                System.err.println("Error: Part Code " + newPart.getPartCode() + " already exists");
+                return;
+            }
+        }
+
+        //insert into our master inventory list
+        masterInventory.add(newPart);
+
+        //refresh UI views instantly
+        tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
+        updateDashboardSummary(masterInventory);
+
+        clearManageFields();
+        System.out.println("Successfully added part " + newPart.getName());
+
     }
 
     @FXML
     void onUpdateStock() {
-        System.out.println("Update Stock Button clicked!");
+        String searchCode = txtPartCode.getText().trim();
+        Part updatedData = getPartFromFields();
+        if (updatedData == null) return;
+
+        boolean found = false;
+        for (int i = 0; i < masterInventory.size(); i++) {
+            if (masterInventory.get(i).getPartCode().equalsIgnoreCase(searchCode)) {
+                masterInventory.set(i, updatedData);
+                found = true;
+                break;
+            }
+        }
+
+        if (found) {
+            tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
+            updateDashboardSummary(masterInventory);
+            clearManageFields();
+            System.out.println("Successfully updated stock part " + searchCode);
+        } else  {
+            System.err.println("Error: Part code " + searchCode + " not found for update");
+        }
     }
 
     @FXML
     void onDeletePart() {
-        System.out.println("Delete Part Button clicked!");
+        String targetCode = txtPartCode.getText().trim();
+        if (targetCode.isEmpty()) return;
+
+        boolean removed = masterInventory.removeIf(p -> p.getPartCode().equalsIgnoreCase(targetCode));
+
+        if (removed) {
+            tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
+            updateDashboardSummary(masterInventory);
+            clearManageFields();
+            System.out.println("Successfully deleted part " + targetCode);
+        } else {
+            System.err.println("Error: Part code " + targetCode + " not found for delete");
+        }
     }
+
+
+
+    //Image
+    @FXML
+    void onBrowseImage() {
+        javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
+        fileChooser.setTitle("Select Part Image");
+        fileChooser.getExtensionFilters().addAll(new javafx.stage.FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg"));
+
+        //Open the file navigation window
+        java.io.File file = fileChooser.showOpenDialog(imgPreview.getScene().getWindow());
+
+        if (file != null) {
+            selectedImagePath = file.getAbsolutePath();
+
+            //Render it instantly inside the ImageView preview slot
+            javafx.scene.image.Image img =  new javafx.scene.image.Image(file.toURI().toString());
+            imgPreview.setImage(img);
+            System.out.println("Image Selected: " + selectedImagePath);
+        }
+    }
+
+
+
+
 
 
 
@@ -221,6 +319,35 @@ public class MainController {
         //refresh the UI text
         lblTotalValue.setText(String.format("Total Inventory Value: %.2f", totalInventoryValue));
         lblTotalParts.setText("Total Parts: " + totalPartsCount);
+    }
+
+
+
+
+
+    //Tab 2
+    private Part getPartFromFields() {
+        try {
+            String code = txtPartCode.getText().trim();
+            String name = txtName.getText().trim();
+            String brand = txtBrand.getText().trim();
+            Double price = Double.parseDouble(txtPrice.getText().trim());
+            int quantity = Integer.parseInt(txtQty.getText().trim());
+            String category = cmbCategory.getValue();
+
+            if (code.isEmpty() || name.isEmpty() || brand.isEmpty() || price < 0 || quantity < 0 || category == null ) {
+                System.err.println("!!!Validation error!!!");
+                return null;
+            }
+
+            //Generate standard date string for today
+            String defaultDate = java.time.LocalDate.now().toString();
+
+            return new Part(code, name, brand, price, quantity, category, defaultDate, selectedImagePath);
+        } catch (NumberFormatException e) {
+            System.err.println("!!!Validation error: Invalid price or quantity numeric format!!!");
+            return null;
+        }
     }
 
 

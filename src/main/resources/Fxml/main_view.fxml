@@ -23,16 +23,16 @@
     <Tab text="Inventory Dashboard">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             <VBox prefHeight="375.0" prefWidth="600.0" AnchorPane.bottomAnchor="-4.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <HBox prefHeight="100.0" prefWidth="200.0">
+                <HBox prefHeight="97.0" prefWidth="595.0">
                     <TextField fx:id="searchField" prefHeight="26.0" prefWidth="170.0" promptText="Search by Name or Brand . . ." />
                     <ComboBox fx:id="categoryFilter" prefWidth="150.0" />
                     <Button fx:id="btnSearch" mnemonicParsing="false" onAction="#onSearch" text="Search" />
                 </HBox>
-                <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                <HBox prefHeight="49.0" prefWidth="595.0" spacing="10.0">
                     <Label fx:id="lblTotalValue" text="Total Inventory Value: Rs. 0.00" />
                     <Label fx:id="lblTotalParts" text="Total Parts: 0" />
                 </HBox>
-                <TableView fx:id="tblDashboard" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tblDashboard" prefHeight="228.0" prefWidth="663.0" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colDashCode" prefWidth="75.0" text="Part Code" />
                         <TableColumn fx:id="colDashName" prefWidth="152.79998779296875" text="Name" />

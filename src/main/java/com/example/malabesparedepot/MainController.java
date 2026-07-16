@@ -37,7 +37,7 @@ public class MainController {
     @FXML private TableColumn<Part, Integer> colDashQty;
     @FXML private TableColumn<Part, String> colDashCategory;
     @FXML private TableColumn<Part, String> colDashImage;
-    @FXML private TableColumn<Part, Void> colDashAction;
+    @FXML private TableColumn<Part, Part> colDashAction;
 
     @FXML private Label lblTotalValue;
     @FXML private Label lblTotalParts;
@@ -159,7 +159,8 @@ public class MainController {
         });
 
         //Custom render for the add to cart button
-        colDashAction.setCellFactory(column -> new TableCell<Part, Void>() {
+        colDashAction.setCellValueFactory(param -> new javafx.beans.property.SimpleObjectProperty<>(param.getValue()));
+        colDashAction.setCellFactory(column -> new TableCell<Part, Part>() {
             private final Button btnAddToCartInline = new Button("Add to Cart");
 
             {
@@ -171,9 +172,9 @@ public class MainController {
                 });
             }
             @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
+            protected void updateItem(Part part, boolean empty) {
+                super.updateItem(part, empty);
+                if (empty || part == null) {
                     setGraphic(null);
                 } else {
                     setGraphic(btnAddToCartInline);

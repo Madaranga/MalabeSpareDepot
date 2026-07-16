@@ -20,6 +20,7 @@ public class App extends Application{
             //Set up window size
             Scene scene = new Scene(root, 850, 600);
 
+
             stage.setTitle("Malabe Spare Depot - Management System");
             stage.setScene(scene);
             stage.show();

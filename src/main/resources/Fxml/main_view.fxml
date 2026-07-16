@@ -40,6 +40,8 @@
                         <TableColumn fx:id="colDashPrice" prefWidth="88.0" text="Price (Rs. )" />
                         <TableColumn fx:id="colDashQty" minWidth="0.0" prefWidth="73.5999755859375" text="Quantity" />
                         <TableColumn fx:id="colDashCategory" prefWidth="93.60003662109375" text="Category" />
+                  <TableColumn fx:id="colDashImage" prefWidth="75.0" text="Image" />
+                  <TableColumn fx:id="colDashAction" prefWidth="75.0" text="Action" />
                     </columns>
                 </TableView>
             </VBox>

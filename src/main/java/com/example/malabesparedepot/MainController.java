@@ -36,6 +36,8 @@ public class MainController {
     @FXML private TableColumn<Part, Double> colDashPrice;
     @FXML private TableColumn<Part, Integer> colDashQty;
     @FXML private TableColumn<Part, String> colDashCategory;
+    @FXML private TableColumn<Part, String> colDashImage;
+    @FXML private TableColumn<Part, Void> colDashAction;
 
     @FXML private Label lblTotalValue;
     @FXML private Label lblTotalParts;
@@ -117,6 +119,67 @@ public class MainController {
         colDashPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         colDashQty.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colDashCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        colDashImage.setCellValueFactory(new PropertyValueFactory<>("imagePath"));
+        colDashImage.setCellFactory(column -> new TableCell<Part, String>() {
+            private final ImageView imageView = new ImageView();
+
+            @Override
+            protected void updateItem(String imagePath, boolean empty) {
+                super.updateItem(imagePath, empty);
+                if (empty ||  imagePath == null || imagePath.isEmpty()) {
+                    setGraphic(null);
+                } else {
+                    try {
+                        //read derectly from Images folder
+                        String resourcePath = "/Images/" + imagePath.trim();
+                        java.io.InputStream is = getClass().getResourceAsStream(resourcePath);
+                        if (is != null) {
+                            javafx.scene.image.Image img = new javafx.scene.image.Image(is);
+                            imageView.setImage(img);
+                            imageView.setFitHeight(40);
+                            imageView.setFitWidth(40);
+                            imageView.setPreserveRatio(true);
+                            setGraphic(imageView);
+                        } else {
+                            java.io.InputStream defaultIs = getClass().getResourceAsStream("/Images/placeholder.png");
+                            if (defaultIs != null) {
+                                imageView.setImage(new javafx.scene.image.Image(defaultIs));
+                                imageView.setFitHeight(40);
+                                imageView.setFitWidth(40);
+                                setGraphic(imageView);
+                            } else {
+                                setGraphic(null);
+                            }
+                        }
+                    } catch (Exception e) {
+                        setGraphic(null);
+                    }
+                }
+            }
+        });
+
+        //Custom render for the add to cart button
+        colDashAction.setCellFactory(column -> new TableCell<Part, Void>() {
+            private final Button btnAddToCartInline = new Button("Add to Cart");
+
+            {
+                btnAddToCartInline.setOnAction(event -> {
+                    Part selectedPart = getTableView().getItems().get(getIndex());
+                    if (selectedPart != null) {
+                        handleInlineAddToCart(selectedPart);
+                    }
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btnAddToCartInline);
+                }
+            }
+        });
 
         //push data into table on app
         tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
@@ -127,6 +190,10 @@ public class MainController {
         });
 
     }
+
+
+
+
 
     //TAB 1 - Dashboard
     @FXML
@@ -292,8 +359,6 @@ public class MainController {
 
 
 
-
-
     //TAB 3 - Checkout & Dealers
     @FXML
     void onAddToCart() {
@@ -348,6 +413,24 @@ public class MainController {
             System.err.println("!!!Validation error: Invalid price or quantity numeric format!!!");
             return null;
         }
+    }
+
+
+    private void handleInlineAddToCart(Part selectedPart) {
+        if (selectedPart.getQuantity() <= 0) {
+            System.err.println("Error: " + selectedPart.getName() + " is currently out of stock");
+            return;
+        }
+
+        //match the tab 3's ComboBox
+        String matchString = selectedPart.getName() + " " + selectedPart.getBrand() + " - " + selectedPart.getPrice();
+        cmbCartPart.getSelectionModel().select(matchString);
+        txtCartQty.setText("1"); //Default quantity input
+
+        //fire existing tab 3 cart
+        onAddToCart();
+
+        System.out.println("Inline add to cart: Sent " + selectedPart.getName() + " to checkout");
     }
 
 

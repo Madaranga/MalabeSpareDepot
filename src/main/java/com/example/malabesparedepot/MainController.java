@@ -34,7 +34,6 @@ public class MainController {
     @FXML private TableColumn<Part, Double> colDashPrice;
     @FXML private TableColumn<Part, Integer> colDashQty;
     @FXML private TableColumn<Part, String> colDashCategory;
-    @FXML private TableColumn<Part, String> colDashDate;
 
     @FXML private Label lblTotalValue;
     @FXML private Label lblTotalParts;
@@ -114,7 +113,6 @@ public class MainController {
         colDashPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         colDashQty.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colDashCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
-        colDashDate.setCellValueFactory(new PropertyValueFactory<>("dateAdded"));
 
         //push data into table on app
         tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));

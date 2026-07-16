@@ -39,7 +39,6 @@
                         <TableColumn fx:id="colDashPrice" prefWidth="75.0" text="Price (Rs. )" />
                         <TableColumn fx:id="colDashQty" prefWidth="75.0" text="Quantity" />
                         <TableColumn fx:id="colDashCategory" prefWidth="75.0" text="Category" />
-                        <TableColumn fx:id="colDashDate" prefWidth="75.0" text="Date Added" />
                     </columns>
                 </TableView>
             </VBox>

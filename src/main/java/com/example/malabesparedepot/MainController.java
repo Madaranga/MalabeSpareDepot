@@ -295,47 +295,6 @@ public class MainController {
 
 
 
-
-
-        //Loop through our master inventory list and find matches
-//        for (Part part : masterInventory) {
-//            boolean matchesSearch = part.getName().toLowerCase().contains(query) ||
-//                    part.getPartCode().toLowerCase().contains(query);
-//
-//            boolean matchesCategory = selectedCategory == null ||
-//                    selectedCategory.equals("All Categories") ||
-//                    part.getCategory().equalsIgnoreCase(selectedCategory);
-//
-//
-//            if (matchesSearch && matchesCategory) {
-//                System.out.println("Found matches: " + part.getName() + " (" + part.getPartCode() + ")");
-//            }
-//        }
-//        tblDashboard.setItems(filteredList);
-//        updateDashboardSummary(filteredList);
-//
-//
-//    }
-//
-//    private void clearManageFields() {
-//        txtPartCode.clear();
-//        txtName.clear();
-//        txtBrand.clear();
-//        txtPrice.clear();
-//        txtQty.clear();
-//        cmbCategory.getSelectionModel().clearSelection();
-//
-//        imgPreview.setImage(null);
-//        selectedImagePath = "placeholder.png";
-//    }
-
-
-
-
-
-
-
-
     //TAB 2 - Manage Items
     @FXML
     void onAddPart() {
@@ -345,7 +304,7 @@ public class MainController {
         //check for duplicate part code
         for (Part p : masterInventory) {
             if (p.getPartCode().equalsIgnoreCase(newPart.getPartCode())) {
-                showAlert(Alert.AlertType.ERROR,"Duplicate code" + newPart.getPartCode() + " already exists");
+                showAlert(Alert.AlertType.ERROR,"Duplicate code","Part code" + newPart.getPartCode() + " already exists");
                 return;
             }
         }
@@ -400,7 +359,7 @@ public class MainController {
             clearManageFields();
             System.out.println("Successfully deleted part " + targetCode);
         } else {
-            showAlert(Alert.AlertType.ERROR, "Part code" + targetCode + " not found for delete");
+            showAlert(Alert.AlertType.ERROR, "Not found","Part code" + targetCode + " not found for delete");
         }
     }
 
@@ -445,11 +404,11 @@ public class MainController {
         try {
             requestQty = Integer.parseInt(txtCartQty.getText().trim());
             if (requestQty <= 0) {
-                showAlert(Alert.AlertType.ERROR, "Invalid Quantity");
+                showAlert(Alert.AlertType.ERROR, "Invalid Quantity", "Quantity must be a positive integer.");
                 return;
             }
         } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Invalid Quantity");
+            showAlert(Alert.AlertType.ERROR, "Invalid Quantity","Please enter a valid number.");
         }
 
         //Validate stock availability
@@ -464,7 +423,7 @@ public class MainController {
         }
 
         if (partToCart.getQuantity() < (existingCartQty + requestQty)) {
-            showAlert(Alert.AlertType.WARNING, "Insufficient Stock");
+            showAlert(Alert.AlertType.WARNING, "Insufficient Stock", "Only " + partToCart.getQuantity() + " units available. You currently have " + existingCartQty + " units in your cart");
             return;
         }
 
@@ -481,7 +440,41 @@ public class MainController {
 
     @FXML
     void onCheckout() {
-        System.out.println("Process Checkout Button clicked!");
+        if (cartList.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING,"Empty Cart", "Your Shopping Cart is Empty");
+            return;
+        }
+
+        Dealer selectedDealer = cmbDealer.getValue();
+        if (selectedDealer == null) {
+            showAlert(Alert.AlertType.WARNING, "No Dealer selected","Please Select a Dealer");
+            return;
+        }
+
+        //Complete the transaction
+        for (CartItem item : cartList) {
+            Part invPart = findPartByCode(item.getPartCode());
+            if (invPart != null) {
+                int originalQty = invPart.getQuantity();
+                invPart.setQuantity(invPart.getQuantity() - originalQty);
+
+                //Log using LoggerUtil
+                LoggerUtil.logAction("PURCHASE", item.getPartCode(), item.getQuantity());
+
+            }
+        }
+
+        //confirmation
+        double finalTotal = PriceCalculator.calculateFinalTotal(cartList);
+        showAlert(Alert.AlertType.INFORMATION,"Transaction Approved", String.format("Successfully purchased items for %s.%nFinal paid amound: Rs. %.2f",selectedDealer.getName(), finalTotal));
+
+        //cleanup
+        cartList.clear();
+        tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
+        updateDashboardSummary(masterInventory);
+        updateCartTotal();
+        txtCartQty.clear();
+
     }
 
 
@@ -515,7 +508,7 @@ public class MainController {
             String category = cmbCategory.getValue();
 
             if (code.isEmpty() || name.isEmpty() || brand.isEmpty() || price < 0 || quantity < 0 || category == null ) {
-                System.err.println("!!!Validation error!!!");
+                showAlert(Alert.AlertType.ERROR, "Validation Error", "All fields must be filled and prices must be positive.");
                 return null;
             }
 
@@ -524,7 +517,7 @@ public class MainController {
 
             return new Part(code, name, brand, price, quantity, category, defaultDate, selectedImagePath);
         } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR,"!!!Validation error: Invalid price or quantity numeric format!!!");
+            showAlert(Alert.AlertType.ERROR,"Validation error", "Invalid price or quantity numeric format.");
             return null;
         }
     }
@@ -532,7 +525,7 @@ public class MainController {
 
     private void handleInlineAddToCart(Part selectedPart) {
         if (selectedPart.getQuantity() <= 0) {
-            showAlert(Alert.AlertType.WARNING, "Out of Stock: " + selectedPart.getName() + " is currently out of stock");
+            showAlert(Alert.AlertType.WARNING, "Out of Stock", selectedPart.getName() + " is currently out of stock");
             return;
         }
 
@@ -551,9 +544,9 @@ public class MainController {
 
 
 
-    private void showAlert(Alert.AlertType alertType, String content) {
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
-        alert.setTitle("Alert");
+        alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();

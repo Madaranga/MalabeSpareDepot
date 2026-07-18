@@ -1,7 +1,12 @@
 package com.example.malabesparedepot;
 
+import com.example.malabesparedepot.model.CartItem;
+import com.example.malabesparedepot.model.Dealer;
 import com.example.malabesparedepot.model.Part;
 import com.example.malabesparedepot.util.DataParser;
+import com.example.malabesparedepot.util.DealerSelector;
+import com.example.malabesparedepot.util.LoggerUtil;
+import com.example.malabesparedepot.util.PriceCalculator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,12 +22,17 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.io.File;
 
 
 
 public class MainController {
 
     private List<Part> masterInventory = new ArrayList<>();
+
+    private final ObservableList<CartItem> cartList = FXCollections.observableArrayList();
+    private List<Dealer> allDealers = new ArrayList<>();
+
 
     //TAB 1
     @FXML private TextField searchField;
@@ -62,8 +72,11 @@ public class MainController {
     @FXML private TextField txtCartQty;
     @FXML private Button btnAddToCart;
     //TAB 3 - Right
-    @FXML private TableView<?> tblCart;
-    @FXML private ComboBox<String> cmbDealer;
+    @FXML private TableView<CartItem> tblCart;
+    @FXML private TableColumn<CartItem, String> colCartName;
+    @FXML private TableColumn<CartItem, Integer> colCartQty;
+    @FXML private TableColumn<CartItem, Double> colCartSubtotal;
+    @FXML private ComboBox<Dealer> cmbDealer;
     @FXML private Label lblTotal;
     @FXML private Button btnCheckout;
 
@@ -77,6 +90,8 @@ public class MainController {
         System.out.println("MainController initialized successfully");
         //Load data
         masterInventory = DataParser.parseInventory("inventory_legacy.txt");
+        allDealers = DataParser.parseDealers("dealers_legacy.txt");
+
         if (masterInventory.isEmpty()) {
             System.err.println("!! Inventory empty or not found !!!");
             return;
@@ -84,11 +99,9 @@ public class MainController {
 
         //Extract unique categories
         Set<String> categories = new HashSet<>();
-        List<String> partNamesForCart = new ArrayList<>();
 
         for (Part part : masterInventory) {
             categories.add(part.getCategory());
-            partNamesForCart.add(part.getName() + " - " + part.getName() );
         }
 
         //Populate tab 1 and tab 2 category ComboBoxes
@@ -96,20 +109,34 @@ public class MainController {
         categoryFilter.setItems(categoryOptions);
         cmbCategory.setItems(categoryOptions);
 
-        //Add an "All Categories"
         categoryFilter.getItems().add(0,"All Categories");
         categoryFilter.getSelectionModel().selectFirst();
 
 
+        //Populate Cart Dropdown
+        populateCartPartDropdown();
+
+        //populate dealer list
+        List<Dealer> selectedDealers = DealerSelector.getRandomFoundDealers(allDealers);
+        cmbDealer.setItems(FXCollections.observableArrayList(selectedDealers));
+        if (!selectedDealers.isEmpty()) {
+            cmbDealer.getSelectionModel().selectFirst();
+        }
+
+        //Add an "All Categories"
+//        categoryFilter.getItems().add(0,"All Categories");
+//        categoryFilter.getSelectionModel().selectFirst();
+
+
         //Populate Tab 3 Cart Parts ComboBox
-        ObservableList<String> partOptions = FXCollections.observableArrayList(partNamesForCart);
-        cmbCartPart.setItems(partOptions);
-
-        //Populate Dealer sample list for testing
-        cmbDealer.setItems(FXCollections.observableArrayList("Retail Customer", "Authorized Dealer (10% Disc)", "Wholesale Partner (15% Disc)"));
-        cmbCartPart.getSelectionModel().selectFirst();
-
-        System.out.println("Data bindings successfully synchronized to UI elements!!!");
+//        ObservableList<String> partOptions = FXCollections.observableArrayList(partNamesForCart);
+//        cmbCartPart.setItems(partOptions);
+//
+//        //Populate Dealer sample list for testing
+//        cmbDealer.setItems(FXCollections.observableArrayList("Retail Customer", "Authorized Dealer (10% Disc)", "Wholesale Partner (15% Disc)"));
+//        cmbCartPart.getSelectionModel().selectFirst();
+//
+//        System.out.println("Data bindings successfully synchronized to UI elements!!!");
 
 
         //Map custom table columns to Part properties
@@ -130,27 +157,34 @@ public class MainController {
                     setGraphic(null);
                 } else {
                     try {
-                        //read derectly from Images folder
+                        //read directly from Images folder
                         String resourcePath = "/Images/" + imagePath.trim();
                         java.io.InputStream is = getClass().getResourceAsStream(resourcePath);
                         if (is != null) {
-                            javafx.scene.image.Image img = new javafx.scene.image.Image(is);
-                            imageView.setImage(img);
-                            imageView.setFitHeight(40);
-                            imageView.setFitWidth(40);
-                            imageView.setPreserveRatio(true);
-                            setGraphic(imageView);
+                            imageView.setImage(new javafx.scene.image.Image(is));
+//                            javafx.scene.image.Image img = new javafx.scene.image.Image(is);
+//                            imageView.setImage(img);
+//                            imageView.setFitHeight(40);
+//                            imageView.setFitWidth(40);
+//                            imageView.setPreserveRatio(true);
+//                            setGraphic(imageView);
                         } else {
                             java.io.InputStream defaultIs = getClass().getResourceAsStream("/Images/placeholder.png");
                             if (defaultIs != null) {
                                 imageView.setImage(new javafx.scene.image.Image(defaultIs));
-                                imageView.setFitHeight(40);
-                                imageView.setFitWidth(40);
-                                setGraphic(imageView);
+//                                imageView.setImage(new javafx.scene.image.Image(defaultIs));
+//                                imageView.setFitHeight(40);
+//                                imageView.setFitWidth(40);
+//                                setGraphic(imageView);
                             } else {
                                 setGraphic(null);
                             }
                         }
+                        imageView.setFitHeight(40);
+                        imageView.setFitWidth(40);
+                        imageView.setPreserveRatio(true);
+                        setGraphic(imageView);;
+
                     } catch (Exception e) {
                         setGraphic(null);
                     }
@@ -186,10 +220,32 @@ public class MainController {
         tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
         updateDashboardSummary(masterInventory);  //calculation labels,refresh UI text
 
+        //setup tab3 active cart columns
+        colCartName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colCartQty.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colCartSubtotal.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
+        tblCart.setItems(cartList);
+
         categoryFilter.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             onSearch();
         });
 
+    }
+
+
+
+
+
+    //populate dropdown in tab 3
+    private void populateCartPartDropdown() {
+        List<String> partNamesForCart = new ArrayList<>();
+        for (Part part : masterInventory) {
+            partNamesForCart.add(part.getPartCode() + " - " +part.getName() + " (" + part.getBrand() + ")");
+        }
+        cmbCartPart.setItems(FXCollections.observableArrayList(partNamesForCart));
+        if (!partNamesForCart.isEmpty()) {
+            cmbCartPart.getSelectionModel().selectFirst();
+        }
     }
 
 
@@ -209,42 +265,20 @@ public class MainController {
         for (Part part : masterInventory) {
             //query is empty OR matches name/brand/code
             boolean matchesSearch = query.isEmpty() ||
-                                    part.getName().toLowerCase().contains(query) ||
-                                    part.getBrand().toLowerCase().contains(query) ||
-                                    part.getPartCode().toLowerCase().contains(query);
+                    part.getName().toLowerCase().contains(query) ||
+                    part.getBrand().toLowerCase().contains(query) ||
+                    part.getPartCode().toLowerCase().contains(query);
 
             //Matches if category selected
             boolean matchesCategory = selectedCategory == null ||
-                                      selectedCategory.equals("All Categories") ||
-                                      part.getCategory().equalsIgnoreCase(selectedCategory);
+                    selectedCategory.equals("All Categories") ||
+                    part.getCategory().equalsIgnoreCase(selectedCategory);
             if (matchesSearch && matchesCategory) {
                 filteredList.add(part);
             }
         }
-
-
-
-
-
-
-        //Loop through our master inventory list and find matches
-        for (Part part : masterInventory) {
-            boolean matchesSearch = part.getName().toLowerCase().contains(query) ||
-                                    part.getPartCode().toLowerCase().contains(query);
-
-            boolean matchesCategory = selectedCategory == null ||
-                                      selectedCategory.equals("All Categories") ||
-                                      part.getCategory().equalsIgnoreCase(selectedCategory);
-
-
-            if (matchesSearch && matchesCategory) {
-                System.out.println("Found matches: " + part.getName() + " (" + part.getPartCode() + ")");
-            }
-        }
         tblDashboard.setItems(filteredList);
         updateDashboardSummary(filteredList);
-
-
     }
 
     private void clearManageFields() {
@@ -254,10 +288,46 @@ public class MainController {
         txtPrice.clear();
         txtQty.clear();
         cmbCategory.getSelectionModel().clearSelection();
-
         imgPreview.setImage(null);
         selectedImagePath = "placeholder.png";
     }
+
+
+
+
+
+
+        //Loop through our master inventory list and find matches
+//        for (Part part : masterInventory) {
+//            boolean matchesSearch = part.getName().toLowerCase().contains(query) ||
+//                    part.getPartCode().toLowerCase().contains(query);
+//
+//            boolean matchesCategory = selectedCategory == null ||
+//                    selectedCategory.equals("All Categories") ||
+//                    part.getCategory().equalsIgnoreCase(selectedCategory);
+//
+//
+//            if (matchesSearch && matchesCategory) {
+//                System.out.println("Found matches: " + part.getName() + " (" + part.getPartCode() + ")");
+//            }
+//        }
+//        tblDashboard.setItems(filteredList);
+//        updateDashboardSummary(filteredList);
+//
+//
+//    }
+//
+//    private void clearManageFields() {
+//        txtPartCode.clear();
+//        txtName.clear();
+//        txtBrand.clear();
+//        txtPrice.clear();
+//        txtQty.clear();
+//        cmbCategory.getSelectionModel().clearSelection();
+//
+//        imgPreview.setImage(null);
+//        selectedImagePath = "placeholder.png";
+//    }
 
 
 
@@ -275,18 +345,16 @@ public class MainController {
         //check for duplicate part code
         for (Part p : masterInventory) {
             if (p.getPartCode().equalsIgnoreCase(newPart.getPartCode())) {
-                System.err.println("Error: Part Code " + newPart.getPartCode() + " already exists");
+                showAlert(Alert.AlertType.ERROR,"Duplicate code" + newPart.getPartCode() + " already exists");
                 return;
             }
         }
 
-        //insert into our master inventory list
-        masterInventory.add(newPart);
 
-        //refresh UI views instantly
-        tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
+        masterInventory.add(newPart); //insert into our master inventory list
+        tblDashboard.setItems(FXCollections.observableArrayList(masterInventory)); //refresh UI views instantly
         updateDashboardSummary(masterInventory);
-
+        populateCartPartDropdown(); //Refresh dropdown
         clearManageFields();
         System.out.println("Successfully added part " + newPart.getName());
 
@@ -310,6 +378,7 @@ public class MainController {
         if (found) {
             tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
             updateDashboardSummary(masterInventory);
+            populateCartPartDropdown();
             clearManageFields();
             System.out.println("Successfully updated stock part " + searchCode);
         } else  {
@@ -327,10 +396,11 @@ public class MainController {
         if (removed) {
             tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
             updateDashboardSummary(masterInventory);
+            populateCartPartDropdown();
             clearManageFields();
             System.out.println("Successfully deleted part " + targetCode);
         } else {
-            System.err.println("Error: Part code " + targetCode + " not found for delete");
+            showAlert(Alert.AlertType.ERROR, "Part code" + targetCode + " not found for delete");
         }
     }
 
@@ -411,7 +481,7 @@ public class MainController {
 
             return new Part(code, name, brand, price, quantity, category, defaultDate, selectedImagePath);
         } catch (NumberFormatException e) {
-            System.err.println("!!!Validation error: Invalid price or quantity numeric format!!!");
+            showAlert(Alert.AlertType.ERROR,"!!!Validation error: Invalid price or quantity numeric format!!!");
             return null;
         }
     }
@@ -419,19 +489,31 @@ public class MainController {
 
     private void handleInlineAddToCart(Part selectedPart) {
         if (selectedPart.getQuantity() <= 0) {
-            System.err.println("Error: " + selectedPart.getName() + " is currently out of stock");
+            showAlert(Alert.AlertType.WARNING, "Out of Stock: " + selectedPart.getName() + " is currently out of stock");
             return;
         }
 
         //match the tab 3's ComboBox
-        String matchString = selectedPart.getName() + " " + selectedPart.getBrand() + " - " + selectedPart.getPrice();
-        cmbCartPart.getSelectionModel().select(matchString);
+        String itemToMatch = selectedPart.getName() + " " + selectedPart.getBrand() + " - " + selectedPart.getPrice();
+        cmbCartPart.getSelectionModel().select(itemToMatch);
         txtCartQty.setText("1"); //Default quantity input
 
         //fire existing tab 3 cart
         onAddToCart();
 
         System.out.println("Inline add to cart: Sent " + selectedPart.getName() + " to checkout");
+    }
+
+
+
+
+
+    private void showAlert(Alert.AlertType alertType, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle("Alert");
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
 

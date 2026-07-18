@@ -125,9 +125,9 @@
                     </Label>
                     <TableView fx:id="tblCart" prefHeight="200.0" prefWidth="200.0">
                         <columns>
-                            <TableColumn prefWidth="75.0" text="Part Name" />
-                            <TableColumn prefWidth="75.0" text="Qty" />
-                            <TableColumn prefWidth="75.0" text="Subtotal" />
+                            <TableColumn fx:id="colCartName" prefWidth="110.0" text="Part Name" />
+                            <TableColumn fx:id="colCartQty" prefWidth="60.0" text="Qty" />
+                            <TableColumn fx:id="colCartSubtotal" prefWidth="95.0" text="Subtotal" />
                         </columns>
                     </TableView>
                     <Label text="Select Dealer" />

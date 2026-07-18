@@ -23,12 +23,16 @@ public class Dealer {
     }
 
     public String getPhoneNumber() {
-
         return phoneNumber;
     }
 
     public String getLocation() {
-
         return location;
+    }
+
+    //Display inside the ComboBox
+    @Override
+    public String toString() {
+        return name + " (" + location + ")";
     }
 }

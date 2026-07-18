@@ -433,7 +433,50 @@ public class MainController {
     //TAB 3 - Checkout & Dealers
     @FXML
     void onAddToCart() {
-        System.out.println("Add To Cart Button clicked!");
+        String selectedStr = cmbCartPart.getValue();
+        if (selectedStr == null) return;
+
+        String code = selectedStr.split(" - ")[0].trim();
+        Part partToCart = findPartByCode(code);
+
+        if (partToCart == null) return;
+
+        int requestQty = 0;
+        try {
+            requestQty = Integer.parseInt(txtCartQty.getText().trim());
+            if (requestQty <= 0) {
+                showAlert(Alert.AlertType.ERROR, "Invalid Quantity");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlert(Alert.AlertType.ERROR, "Invalid Quantity");
+        }
+
+        //Validate stock availability
+        int existingCartQty = 0;
+        CartItem existingItem = null;
+        for (CartItem item : cartList) {
+            if (item.getPartCode().equalsIgnoreCase(code)) {
+                existingCartQty = item.getQuantity();
+                existingItem = item;
+                break;
+            }
+        }
+
+        if (partToCart.getQuantity() < (existingCartQty + requestQty)) {
+            showAlert(Alert.AlertType.WARNING, "Insufficient Stock");
+            return;
+        }
+
+        //Add or merge into cart list
+        if (existingItem != null) {
+            existingItem.setQuantity(existingItem.getQuantity() + requestQty);
+            tblCart.refresh();
+        } else {
+            cartList.add(new CartItem(partToCart, requestQty));
+        }
+        updateCartTotal();
+
     }
 
     @FXML
@@ -514,6 +557,20 @@ public class MainController {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    private Part findPartByCode(String code) {
+        for (Part part : masterInventory) {
+            if (part.getPartCode().equalsIgnoreCase(code)) {
+                return part;
+            }
+        }
+        return null;
+    }
+
+    private void updateCartTotal() {
+        double total = PriceCalculator.calculateFinalTotal(cartList);
+        lblTotal.setText(String.format("Total : Rs. %.2f", total));
     }
 
 

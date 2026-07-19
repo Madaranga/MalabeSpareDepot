@@ -456,7 +456,7 @@ public class MainController {
             Part invPart = findPartByCode(item.getPartCode());
             if (invPart != null) {
                 int originalQty = invPart.getQuantity();
-                invPart.setQuantity(invPart.getQuantity() - originalQty);
+                invPart.setQuantity(originalQty - item.getQuantity());
 
                 //Log using LoggerUtil
                 LoggerUtil.logAction("PURCHASE", item.getPartCode(), item.getQuantity());
@@ -530,7 +530,7 @@ public class MainController {
         }
 
         //match the tab 3's ComboBox
-        String itemToMatch = selectedPart.getName() + " " + selectedPart.getBrand() + " - " + selectedPart.getPrice();
+        String itemToMatch = selectedPart.getPartCode() + " - " + selectedPart.getName() + " (" + selectedPart.getBrand() + ")";
         cmbCartPart.getSelectionModel().select(itemToMatch);
         txtCartQty.setText("1"); //Default quantity input
 

@@ -464,16 +464,20 @@ public class MainController {
             }
         }
 
+        tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
+        updateDashboardSummary(masterInventory);
+
         //confirmation
         double finalTotal = PriceCalculator.calculateFinalTotal(cartList);
         showAlert(Alert.AlertType.INFORMATION,"Transaction Approved", String.format("Successfully purchased items for %s.%nFinal paid amound: Rs. %.2f",selectedDealer.getName(), finalTotal));
 
         //cleanup
         cartList.clear();
-        tblDashboard.setItems(FXCollections.observableArrayList(masterInventory));
-        updateDashboardSummary(masterInventory);
+
         updateCartTotal();
         txtCartQty.clear();
+
+        tblDashboard.refresh();
 
     }
 

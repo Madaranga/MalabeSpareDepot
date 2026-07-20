@@ -20,6 +20,10 @@ public class App extends Application{
             //Set up window size
             Scene scene = new Scene(root, 850, 600);
 
+            //Attach the stylesheet
+            String cssPath = getClass().getResource("/Styles/style.css").toExternalForm();
+            scene.getStylesheets().add(cssPath);
+
 
             stage.setTitle("Malabe Spare Depot - Management System");
             stage.setScene(scene);

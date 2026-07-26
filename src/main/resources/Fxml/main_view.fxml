@@ -50,6 +50,13 @@
     <Tab text="Manage Items">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Search Part Code for Update" />
+                  <TextField fx:id="txtUpdateSearchCode" promptText="Example: P001" />
+                  <Button mnemonicParsing="false" onAction="#onSearchItemForUpdate" text="Search" />
+               </children>
+            </HBox>
                 <GridPane prefHeight="424.0" prefWidth="792.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

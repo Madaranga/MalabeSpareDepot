@@ -61,6 +61,7 @@ public class MainController {
     @FXML private ComboBox<String> cmbCategory;
     @FXML private ImageView imgPreview;
     private String selectedImagePath = "placeholder.png"; //default fallback
+    @FXML private TextField txtUpdateSearchCode;
 
 
     @FXML private Button btnAdd;
@@ -123,21 +124,6 @@ public class MainController {
             cmbDealer.getSelectionModel().selectFirst();
         }
 
-        //Add an "All Categories"
-//        categoryFilter.getItems().add(0,"All Categories");
-//        categoryFilter.getSelectionModel().selectFirst();
-
-
-        //Populate Tab 3 Cart Parts ComboBox
-//        ObservableList<String> partOptions = FXCollections.observableArrayList(partNamesForCart);
-//        cmbCartPart.setItems(partOptions);
-//
-//        //Populate Dealer sample list for testing
-//        cmbDealer.setItems(FXCollections.observableArrayList("Retail Customer", "Authorized Dealer (10% Disc)", "Wholesale Partner (15% Disc)"));
-//        cmbCartPart.getSelectionModel().selectFirst();
-//
-//        System.out.println("Data bindings successfully synchronized to UI elements!!!");
-
 
         //Map custom table columns to Part properties
         colDashCode.setCellValueFactory(new PropertyValueFactory<>("partCode"));
@@ -162,20 +148,10 @@ public class MainController {
                         java.io.InputStream is = getClass().getResourceAsStream(resourcePath);
                         if (is != null) {
                             imageView.setImage(new javafx.scene.image.Image(is));
-//                            javafx.scene.image.Image img = new javafx.scene.image.Image(is);
-//                            imageView.setImage(img);
-//                            imageView.setFitHeight(40);
-//                            imageView.setFitWidth(40);
-//                            imageView.setPreserveRatio(true);
-//                            setGraphic(imageView);
                         } else {
                             java.io.InputStream defaultIs = getClass().getResourceAsStream("/Images/placeholder.png");
                             if (defaultIs != null) {
                                 imageView.setImage(new javafx.scene.image.Image(defaultIs));
-//                                imageView.setImage(new javafx.scene.image.Image(defaultIs));
-//                                imageView.setFitHeight(40);
-//                                imageView.setFitWidth(40);
-//                                setGraphic(imageView);
                             } else {
                                 setGraphic(null);
                             }
@@ -296,6 +272,31 @@ public class MainController {
 
 
     //TAB 2 - Manage Items
+    @FXML
+    void onSearchItemForUpdate() {
+        String searchCode = txtUpdateSearchCode.getText().trim();
+
+        if (searchCode.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING,"Missing Part Code", "Please enter a Part Code to search");
+            return;
+        }
+
+        Part foundPart = findPartByCode(searchCode);
+
+        if (foundPart == null) {
+            showAlert(Alert.AlertType.WARNING,"Item not found", "No item exist with Part Code: " + searchCode);
+            return;
+        }
+
+        txtPartCode.setText(foundPart.getPartCode());
+        txtName.setText(foundPart.getName());
+        txtBrand.setText(foundPart.getBrand());
+        txtPrice.setText(String.format("%.2f", foundPart.getPrice()));
+        txtQty.setText(String.valueOf(foundPart.getQuantity()));
+        cmbCategory.getSelectionModel().select(foundPart.getCategory());
+        selectedImagePath = foundPart.getImagePath();
+    }
+
     @FXML
     void onAddPart() {
         Part newPart = getPartFromFields();

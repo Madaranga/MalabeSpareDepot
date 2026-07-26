@@ -174,6 +174,7 @@ public class MainController {
             private final Button btnAddToCartInline = new Button("Add to Cart");
 
             {
+                btnAddToCartInline.getStyleClass().add("table-action-btn");
                 btnAddToCartInline.setOnAction(event -> {
                     Part selectedPart = getTableView().getItems().get(getIndex());
                     if (selectedPart != null) {

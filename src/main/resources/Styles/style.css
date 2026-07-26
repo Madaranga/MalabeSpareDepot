@@ -161,6 +161,17 @@
     -fx-background-color: #1d4ed8;
 }
 
+.table-action-btn {
+    -fx-background-color: #2f6FB8;
+    -fx-text-fill: white;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 4px 10px;
+    -fx-background-radius: 5px;
+}
+
+
+
 /*Summary labels in dashboard*/
 #lblTotalValue, #lblTotalParts {
     -fx-background-color: #eef2ff;

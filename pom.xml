@@ -13,9 +13,13 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<<<<<<< Updated upstream
 
         <maven.compiler.release>21</maven.compiler.release>
         <javafx.version>21.0.6</javafx.version>
+=======
+        <maven.compiler.release>21</maven.compiler.release>
+>>>>>>> Stashed changes
         <junit.version>5.12.1</junit.version>
     </properties>
 
@@ -71,10 +75,14 @@
                         <id>default-cli</id>
 
                         <configuration>
+<<<<<<< Updated upstream
                             <mainClass>
                                 com.example.malabesparedepot/com.example.malabesparedepot.Main
                             </mainClass>
 
+=======
+                            <mainClass>com.example.malabesparedepot/com.example.malabesparedepot.App</mainClass>
+>>>>>>> Stashed changes
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
@@ -88,5 +96,9 @@
 
         </plugins>
     </build>
+<<<<<<< Updated upstream
 
 </project>
+=======
+</project>
+>>>>>>> Stashed changes

@@ -56,7 +56,34 @@ public class Part {
 
     // Setters for updates
     public void setQuantity(int quantity) {
-
         this.quantity = quantity;
+    }
+
+    public void setPartCode(String partCode) {
+        this.partCode = partCode;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

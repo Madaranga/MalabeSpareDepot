@@ -10,14 +10,21 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.FileNotFoundException;
 
-public class DashboardController extends NavigationController{
+public class DashboardController extends NavigationController {
 
     private static final String ALL_CATEGORIES = "All Categories";
 
@@ -26,19 +33,32 @@ public class DashboardController extends NavigationController{
 
     @FXML
     private TextField searchField;
-    @FXML private ComboBox<String> categoryFilter;
-    @FXML private TableView<Part> inventoryTable;
-    @FXML private TableColumn<Part, String> codeColumn;
-    @FXML private TableColumn<Part, String> nameColumn;
-    @FXML private TableColumn<Part, String> brandColumn;
-    @FXML private TableColumn<Part, Double> priceColumn;
-    @FXML private TableColumn<Part, Integer> quantityColumn;
-    @FXML private TableColumn<Part, String> categoryColumn;
-    @FXML private TableColumn<Part, String> imageColumn;
-    @FXML private TableColumn<Part, Part> actionColumn;
-    @FXML private Label totalValueLabel;
-    @FXML private Label totalPartsLabel;
-    @FXML private Label cartCountLabel;
+    @FXML
+    private ComboBox<String> categoryFilter;
+    @FXML
+    private TableView<Part> tblDashboard;
+    @FXML
+    private TableColumn<Part, String> colDashCode;
+    @FXML
+    private TableColumn<Part, String> colDashName;
+    @FXML
+    private TableColumn<Part, String> colDashBrand;
+    @FXML
+    private TableColumn<Part, Double> colDashPrice;
+    @FXML
+    private TableColumn<Part, Integer> colDashQty;
+    @FXML
+    private TableColumn<Part, String> colDashCategory;
+    @FXML
+    private TableColumn<Part, String> colDashImage;
+    @FXML
+    private TableColumn<Part, Part> colDashAction;
+    @FXML
+    private Label lblTotalValue;
+    @FXML
+    private Label lblTotalParts;
+    @FXML
+    private Label lblCartCount;
 
     @FXML
     private void initialize() {
@@ -50,8 +70,8 @@ public class DashboardController extends NavigationController{
 
         filteredParts = new FilteredList<>(data.getParts(), part -> true);
         SortedList<Part> sortedParts = new SortedList<>(filteredParts);
-        sortedParts.comparatorProperty().bind(inventoryTable.comparatorProperty());
-        inventoryTable.setItems(sortedParts);
+        sortedParts.comparatorProperty().bind(tblDashboard.comparatorProperty());
+        tblDashboard.setItems(sortedParts);
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> applyFilter());
         categoryFilter.valueProperty().addListener((observable, oldValue, newValue) -> applyFilter());
@@ -65,14 +85,14 @@ public class DashboardController extends NavigationController{
     }
 
     private void configureColumns() {
-        codeColumn.setCellValueFactory(new PropertyValueFactory<>("partCode"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        brandColumn.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-        imageColumn.setCellValueFactory(new PropertyValueFactory<>("imagePath"));
-        imageColumn.setCellFactory(column -> new TableCell<>() {
+        colDashCode.setCellValueFactory(new PropertyValueFactory<>("partCode"));
+        colDashName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colDashBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        colDashPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colDashQty.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colDashCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        colDashImage.setCellValueFactory(new PropertyValueFactory<>("imagePath"));
+        colDashImage.setCellFactory(column -> new TableCell<>() {
             private final ImageView imageView = new ImageView();
 
             @Override
@@ -92,8 +112,8 @@ public class DashboardController extends NavigationController{
             }
         });
 
-        actionColumn.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue()));
-        actionColumn.setCellFactory(column -> new TableCell<>() {
+        colDashAction.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue()));
+        colDashAction.setCellFactory(column -> new TableCell<>() {
             private final Button addButton = new Button("Add to Cart");
 
             {
@@ -110,7 +130,7 @@ public class DashboardController extends NavigationController{
     }
 
     @FXML
-    private void handleSearch() {
+    private void onSearch() {
         applyFilter();
     }
 
@@ -168,33 +188,13 @@ public class DashboardController extends NavigationController{
                 value += part.getPrice() * part.getQuantity();
             }
         }
-        totalPartsLabel.setText("Total Parts: " + quantity);
-        totalValueLabel.setText(String.format("Inventory Value: Rs. %.2f", value));
+        lblTotalParts.setText("Total Parts: " + quantity);
+        lblTotalValue.setText(String.format("Inventory Value: Rs. %.2f", value));
     }
 
     private void updateCartCount() {
         int count = data.getCartItems().stream().mapToInt(CartItem::getQuantity).sum();
-        cartCountLabel.setText("Cart: " + count);
+        lblCartCount.setText("Cart: " + count);
     }
 
-    @FXML private void openInventory(ActionEvent event) {
-        navigateTo(event, "/fxml/inventory.fxml");
-    }
-
-    @FXML private void openDealers(ActionEvent event) {
-        navigateTo(event, "/fxml/dealers.fxml");
-    }
-
-    @FXML private void openSales(ActionEvent event) {
-        navigateTo(event, "/fxml/sales.fxml");
-    }
-
-    @FXML private void openLowStock(ActionEvent event) {
-        navigateTo(event, "/fxml/lowstock.fxml");
-    }
-
-    @FXML private void openAuditLog(ActionEvent event) {
-        navigateTo(event, "/fxml/audit.fxml");
-    }
 }
-

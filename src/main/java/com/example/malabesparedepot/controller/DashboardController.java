@@ -22,8 +22,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.io.FileNotFoundException;
-
 public class DashboardController extends NavigationController {
 
     private static final String ALL_CATEGORIES = "All Categories";
@@ -31,34 +29,20 @@ public class DashboardController extends NavigationController {
     private final ApplicationData data = ApplicationData.getInstance();
     private FilteredList<Part> filteredParts;
 
-    @FXML
-    private TextField searchField;
-    @FXML
-    private ComboBox<String> categoryFilter;
-    @FXML
-    private TableView<Part> tblDashboard;
-    @FXML
-    private TableColumn<Part, String> colDashCode;
-    @FXML
-    private TableColumn<Part, String> colDashName;
-    @FXML
-    private TableColumn<Part, String> colDashBrand;
-    @FXML
-    private TableColumn<Part, Double> colDashPrice;
-    @FXML
-    private TableColumn<Part, Integer> colDashQty;
-    @FXML
-    private TableColumn<Part, String> colDashCategory;
-    @FXML
-    private TableColumn<Part, String> colDashImage;
-    @FXML
-    private TableColumn<Part, Part> colDashAction;
-    @FXML
-    private Label lblTotalValue;
-    @FXML
-    private Label lblTotalParts;
-    @FXML
-    private Label lblCartCount;
+    @FXML private TextField searchField;
+    @FXML private ComboBox<String> categoryFilter;
+    @FXML private TableView<Part> tblDashboard;
+    @FXML private TableColumn<Part, String> colDashCode;
+    @FXML private TableColumn<Part, String> colDashName;
+    @FXML private TableColumn<Part, String> colDashBrand;
+    @FXML private TableColumn<Part, Double> colDashPrice;
+    @FXML private TableColumn<Part, Integer> colDashQty;
+    @FXML private TableColumn<Part, String> colDashCategory;
+    @FXML private TableColumn<Part, String> colDashImage;
+    @FXML private TableColumn<Part, Part> colDashAction;
+    @FXML private Label lblTotalValue;
+    @FXML private Label lblTotalParts;
+    @FXML private Label lblCartCount;
 
     @FXML
     private void initialize() {
@@ -72,6 +56,7 @@ public class DashboardController extends NavigationController {
         SortedList<Part> sortedParts = new SortedList<>(filteredParts);
         sortedParts.comparatorProperty().bind(tblDashboard.comparatorProperty());
         tblDashboard.setItems(sortedParts);
+
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> applyFilter());
         categoryFilter.valueProperty().addListener((observable, oldValue, newValue) -> applyFilter());
@@ -98,12 +83,7 @@ public class DashboardController extends NavigationController {
             @Override
             protected void updateItem(String imagePath, boolean empty) {
                 super.updateItem(imagePath, empty);
-                Image image = null;
-                try {
-                    image = empty ? null : ImageUtil.loadImage(imagePath);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                Image image = empty ? null : ImageUtil.loadImage(imagePath);
                 imageView.setImage(image);
                 imageView.setFitWidth(38);
                 imageView.setFitHeight(38);
@@ -197,4 +177,23 @@ public class DashboardController extends NavigationController {
         lblCartCount.setText("Cart: " + count);
     }
 
+    @FXML private void onOpenInventory(ActionEvent event) {
+        navigateTo(event, "/Fxml/inventory.fxml");
+    }
+
+    @FXML private void onOpenDealers(ActionEvent event) {
+        navigateTo(event, "/Fxml/dealers.fxml");
+    }
+
+    @FXML private void onOpenSales(ActionEvent event) {
+        navigateTo(event, "/Fxml/sales.fxml");
+    }
+
+    @FXML private void onOpenLowStock(ActionEvent event) {
+        navigateTo(event, "/Fxml/low_stock.fxml");
+    }
+
+    @FXML private void onOpenAuditLog(ActionEvent event) {
+        navigateTo(event, "/Fxml/audit_log.fxml");
+    }
 }

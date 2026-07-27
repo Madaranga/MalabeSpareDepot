@@ -13,7 +13,7 @@ import java.net.URL;
 
 public abstract class NavigationController {
 
-    protected static final String DASHBOARD_FXML = "/fxml/dashboard.fxml";
+    protected static final String DASHBOARD_FXML = "/Fxml/dashboard.fxml";
 
     protected void navigateTo(ActionEvent event, String fxmlFile) {
         URL resource = getClass().getResource(fxmlFile);
@@ -40,7 +40,7 @@ public abstract class NavigationController {
         }
     }
 
-    protected void handleBackToDashboard(ActionEvent event) {
+    protected void onBackToDashboard(ActionEvent event) {
         navigateTo(event, DASHBOARD_FXML);
     }
 
@@ -58,4 +58,3 @@ public abstract class NavigationController {
         showAlert(Alert.AlertType.ERROR, "Navigation Error", message);
     }
 }
-

@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import java.io.*;
 
 public class ImageUtil {
-    private static final String IMAGE_RECOURCE_FOLDER = "/images/";
+    private static final String IMAGE_RECOURCE_FOLDER = "/Images/";
     private ImageUtil() {
     }
 

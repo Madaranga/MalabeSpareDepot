@@ -1,16 +1,13 @@
-package com.example.malabesparedepot.mode;
+package com.example.malabesparedepot.data;
 
 import com.example.malabesparedepot.model.Part;
 import com.example.malabesparedepot.model.Dealer;
 import com.example.malabesparedepot.model.CartItem;
 import com.example.malabesparedepot.util.DataParser;
-import com.example.malabesparedepot.util.DataParser;
 import com.example.malabesparedepot.util.DealerSelector;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;

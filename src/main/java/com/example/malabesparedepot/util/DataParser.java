@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataParser {
+    public static final String DEFAULT_INVENTORY_FILE = "inventory_legacy.txt";
+    public static final String DEFAULT_DEALERS_FILE = "dealers_legacy.txt";
 
     public static List<Part> parseInventory(String filePath) {
         List<Part> partList = new ArrayList<>();

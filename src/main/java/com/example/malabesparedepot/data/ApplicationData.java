@@ -1,8 +1,8 @@
 package com.example.malabesparedepot.data;
 
-import com.example.malabesparedepot.model.Part;
-import com.example.malabesparedepot.model.Dealer;
 import com.example.malabesparedepot.model.CartItem;
+import com.example.malabesparedepot.model.Dealer;
+import com.example.malabesparedepot.model.Part;
 import com.example.malabesparedepot.util.DataParser;
 import com.example.malabesparedepot.util.DealerSelector;
 import javafx.collections.FXCollections;
@@ -12,39 +12,49 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ApplicationData {
+public final class ApplicationData {
+
     private static final ApplicationData INSTANCE = new ApplicationData();
 
     private final ObservableList<Part> parts;
     private final ObservableList<Dealer> dealers;
-    private final ObservableList<Dealer> saleDealers;
+    private final ObservableList<Dealer> salesDealers;
     private final ObservableList<CartItem> cartItems = FXCollections.observableArrayList();
 
-    private ApplicationData(){
-        parts = FXCollections.observableArrayList(DataParser.parseInventory(DataParser.DEFAULT_INVENTORY_FILE));
-        dealers = FXCollections.observableArrayList(DataParser.parseDealers(DataParser.DEFAULT_DEALERS_FILE));
+    private ApplicationData() {
+        parts = FXCollections.observableArrayList(
+                DataParser.parseInventory(DataParser.DEFAULT_INVENTORY_FILE)
+        );
+        dealers = FXCollections.observableArrayList(
+                DataParser.parseDealers(DataParser.DEFAULT_DEALERS_FILE)
+        );
         List<Dealer> selectedDealers = DealerSelector.getRandomFoundDealers(dealers);
-        saleDealers = FXCollections.observableArrayList(selectedDealers);
+        salesDealers = FXCollections.observableArrayList(selectedDealers);
     }
 
-    public static ApplicationData getInstance(){
+    public static ApplicationData getInstance() {
         return INSTANCE;
     }
-    public ObservableList<Part> getParts(){
+
+    public ObservableList<Part> getParts() {
         return parts;
     }
-    public ObservableList<Dealer> getDealers(){
+
+    public ObservableList<Dealer> getDealers() {
         return dealers;
     }
-    public ObservableList<Dealer> getSaleDealers(){
-        return saleDealers;
+
+    public ObservableList<Dealer> getSalesDealers() {
+        return salesDealers;
     }
-    public ObservableList<CartItem> getCartItems(){
+
+    public ObservableList<CartItem> getCartItems() {
         return cartItems;
     }
-    public  ObservableList<String> getCategories(){
+
+    public ObservableList<String> getCategories() {
         Set<String> categories = new LinkedHashSet<>();
-        for(Part part : parts){
+        for (Part part : parts) {
             categories.add(part.getCategory());
         }
         return FXCollections.observableArrayList(categories);
@@ -80,6 +90,4 @@ public class ApplicationData {
         cartItems.removeIf(item -> item.getPart() == part);
         parts.remove(part);
     }
-
-
 }

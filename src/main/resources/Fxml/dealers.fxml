@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1100.0" styleClass="root-pane"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/Fxml/1"
+            fx:controller="com.example.malabesparedepot.controller.DealerController">
+    <children>
+        <VBox spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="page-header">
+                <Button onAction="#onBackToDashboard" styleClass="back-button"
+                        text="&#8592; Back to Dashboard"/>
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label styleClass="page-title" text="Dealers"/>
+                    <Label styleClass="page-subtitle" text="View the existing dealer directory"/>
+                </VBox>
+                <Label fx:id="lblDealerCount" styleClass="summary-pill" text="0 dealers"/>
+            </HBox>
+            <VBox spacing="14.0" styleClass="content-panel" VBox.vgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <Label styleClass="section-title" text="Dealer Directory"/>
+                    <TextField fx:id="searchField" onAction="#onSearch"
+                               promptText="Search ID, name, phone or location..." HBox.hgrow="ALWAYS"/>
+                    <Button onAction="#onSearch" styleClass="primary-button" text="Search"/>
+                </HBox>
+                <TableView fx:id="tblDealers" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colDealerId" prefWidth="140.0" text="Dealer ID"/>
+                        <TableColumn fx:id="colDealerName" prefWidth="320.0" text="Dealer Name"/>
+                        <TableColumn fx:id="colDealerPhone" prefWidth="220.0" text="Phone Number"/>
+                        <TableColumn fx:id="colDealerLocation" prefWidth="260.0" text="Location"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </VBox>
+    </children>
+</AnchorPane>

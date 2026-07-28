@@ -8,36 +8,29 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1100.0" styleClass="root-pane"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/Fxml/1"
-            fx:controller="com.example.malabesparedepot.controller.LowStockController">
+<AnchorPane prefHeight="720.0" prefWidth="1100.0" styleClass="root-pane" stylesheets="@../Styles/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.malabesparedepot.controller.LowStockController">
     <children>
-        <VBox spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="page-header">
-                <Button onAction="#onBackToDashboard" styleClass="back-button"
-                        text="&#8592; Back to Dashboard"/>
+                <Button onAction="#onBackToDashboard" styleClass="back-button" text="← Back to Dashboard" />
                 <VBox HBox.hgrow="ALWAYS">
-                    <Label styleClass="page-title" text="Low Stock"/>
-                    <Label styleClass="page-subtitle" text="Monitor parts that require replenishment"/>
+                    <Label styleClass="page-title" text="Low Stock" />
+                    <Label styleClass="page-subtitle" text="Monitor parts that require replenishment" />
                 </VBox>
-                <Button onAction="#onRefresh" styleClass="secondary-button" text="Refresh"/>
+                <Button onAction="#onRefresh" styleClass="secondary-button" text="Refresh" />
             </HBox>
             <VBox spacing="14.0" styleClass="content-panel" VBox.vgrow="ALWAYS">
                 <HBox alignment="CENTER_LEFT" spacing="10.0">
-                    <Label fx:id="lblLowStockCount" styleClass="warning-pill"
-                           text="0 low-stock items"/>
-                    <Label fx:id="lblThreshold" styleClass="summary-pill"
-                           text="Threshold: 5 units or fewer"/>
+                    <Label fx:id="lblLowStockCount" styleClass="warning-pill" text="0 low-stock items" />
+                    <Label fx:id="lblThreshold" styleClass="summary-pill" text="Threshold: 5 units or fewer" />
                 </HBox>
                 <TableView fx:id="tblLowStock" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colPartCode" prefWidth="150.0" text="Part Code"/>
-                        <TableColumn fx:id="colPartName" prefWidth="320.0" text="Part Name"/>
-                        <TableColumn fx:id="colPartCategory" prefWidth="200.0" text="Category"/>
-                        <TableColumn fx:id="colPartQty" prefWidth="140.0" text="Current Quantity"/>
-                        <TableColumn fx:id="colStockStatus" prefWidth="190.0" text="Status"/>
+                        <TableColumn fx:id="colPartCode" prefWidth="150.0" text="Part Code" />
+                        <TableColumn fx:id="colPartName" prefWidth="320.0" text="Part Name" />
+                        <TableColumn fx:id="colPartCategory" prefWidth="200.0" text="Category" />
+                        <TableColumn fx:id="colPartQty" prefWidth="140.0" text="Current Quantity" />
+                        <TableColumn fx:id="colStockStatus" prefWidth="190.0" text="Status" />
                     </columns>
                 </TableView>
             </VBox>

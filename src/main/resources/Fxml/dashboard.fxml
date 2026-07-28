@@ -10,51 +10,45 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1100.0" styleClass="root-pane"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/Fxml/1"
-            fx:controller="com.example.malabesparedepot.controller.DashboardController">
-    <VBox spacing="18.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane prefHeight="720.0" prefWidth="1100.0" styleClass="root-pane" stylesheets="@../Styles/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.malabesparedepot.controller.DashboardController">
+    <VBox spacing="18.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="page-header">
             <VBox HBox.hgrow="ALWAYS">
-                <Label styleClass="app-title" text="Malabe Spare Depot"/>
-                <Label styleClass="page-subtitle" text="Inventory and sales management dashboard"/>
+                <Label styleClass="app-title" text="Malabe Spare Depot" textFill="#f4f4f4" />
+                <Label styleClass="page-subtitle" text="Inventory and sales management dashboard" />
             </VBox>
-            <Label fx:id="lblCartCount" styleClass="summary-pill" text="Cart: 0"/>
+            <Label fx:id="lblCartCount" styleClass="summary-pill" text="Cart: 0" />
         </HBox>
 
         <HBox alignment="CENTER" spacing="12.0" styleClass="dashboard-navigation">
-            <Button onAction="#onOpenInventory" styleClass="navigation-button" text="Inventory"/>
-            <Button onAction="#onOpenDealers" styleClass="navigation-button" text="Dealers"/>
-            <Button onAction="#onOpenSales" styleClass="navigation-button" text="Sales"/>
-            <Button onAction="#onOpenLowStock" styleClass="navigation-button" text="Low Stock"/>
-            <Button onAction="#onOpenAuditLog" styleClass="navigation-button" text="Audit Log"/>
+            <Button onAction="#onOpenInventory" styleClass="navigation-button" text="Inventory" />
+            <Button onAction="#onOpenDealers" styleClass="navigation-button" text="Dealers" />
+            <Button onAction="#onOpenSales" styleClass="navigation-button" text="Sales" />
+            <Button onAction="#onOpenLowStock" styleClass="navigation-button" text="Low Stock" />
+            <Button onAction="#onOpenAuditLog" styleClass="navigation-button" text="Audit Log" />
         </HBox>
 
         <VBox spacing="14.0" styleClass="content-panel" VBox.vgrow="ALWAYS">
             <HBox alignment="CENTER_LEFT" spacing="10.0">
-                <Label styleClass="section-title" text="Inventory Overview"/>
-                <TextField fx:id="searchField" onAction="#onSearch" prefWidth="280.0"
-                           promptText="Search code, name or brand..." HBox.hgrow="ALWAYS"/>
-                <ComboBox fx:id="categoryFilter" prefWidth="190.0"/>
-                <Button onAction="#onSearch" styleClass="primary-button" text="Search"/>
+                <Label styleClass="section-title" text="Inventory Overview" />
+                <TextField fx:id="searchField" onAction="#onSearch" prefWidth="280.0" promptText="Search code, name or brand..." HBox.hgrow="ALWAYS" />
+                <ComboBox fx:id="categoryFilter" prefWidth="190.0" />
+                <Button onAction="#onSearch" styleClass="primary-button" text="Search" />
             </HBox>
             <HBox spacing="10.0">
-                <Label fx:id="lblTotalValue" styleClass="summary-pill"
-                       text="Inventory Value: Rs. 0.00"/>
-                <Label fx:id="lblTotalParts" styleClass="summary-pill" text="Total Parts: 0"/>
+                <Label fx:id="lblTotalValue" styleClass="summary-pill" text="Inventory Value: Rs. 0.00" />
+                <Label fx:id="lblTotalParts" styleClass="summary-pill" text="Total Parts: 0" />
             </HBox>
             <TableView fx:id="tblDashboard" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="colDashCode" prefWidth="90.0" text="Part Code"/>
-                    <TableColumn fx:id="colDashName" prefWidth="190.0" text="Name"/>
-                    <TableColumn fx:id="colDashBrand" prefWidth="120.0" text="Brand"/>
-                    <TableColumn fx:id="colDashPrice" prefWidth="105.0" text="Price (Rs.)"/>
-                    <TableColumn fx:id="colDashQty" prefWidth="85.0" text="Quantity"/>
-                    <TableColumn fx:id="colDashCategory" prefWidth="130.0" text="Category"/>
-                    <TableColumn fx:id="colDashImage" prefWidth="80.0" text="Image"/>
-                    <TableColumn fx:id="colDashAction" prefWidth="125.0" text="Action"/>
+                    <TableColumn fx:id="colDashCode" prefWidth="90.0" text="Part Code" />
+                    <TableColumn fx:id="colDashName" prefWidth="190.0" text="Name" />
+                    <TableColumn fx:id="colDashBrand" prefWidth="120.0" text="Brand" />
+                    <TableColumn fx:id="colDashPrice" prefWidth="105.0" text="Price (Rs.)" />
+                    <TableColumn fx:id="colDashQty" prefWidth="85.0" text="Quantity" />
+                    <TableColumn fx:id="colDashCategory" prefWidth="130.0" text="Category" />
+                    <TableColumn fx:id="colDashImage" prefWidth="80.0" text="Image" />
+                    <TableColumn fx:id="colDashAction" prefWidth="125.0" text="Action" />
                 </columns>
             </TableView>
         </VBox>

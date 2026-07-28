@@ -7,25 +7,20 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1100.0" styleClass="root-pane"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/Fxml/1"
-            fx:controller="com.example.malabesparedepot.controller.AuditController">
-    <VBox spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane prefHeight="720.0" prefWidth="1100.0" styleClass="root-pane" stylesheets="@../Styles/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.malabesparedepot.controller.AuditController">
+    <VBox spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="page-header">
-            <Button onAction="#onBackToDashboard" styleClass="back-button"
-                    text="&#8592; Back to Dashboard"/>
+            <Button onAction="#onBackToDashboard" styleClass="back-button" text="← Back to Dashboard" />
             <VBox HBox.hgrow="ALWAYS">
-                <Label styleClass="page-title" text="Audit Log"/>
-                <Label styleClass="page-subtitle" text="Review recorded inventory and sales activity"/>
+                <Label styleClass="page-title" text="Audit Log" />
+                <Label styleClass="page-subtitle" text="Review recorded inventory and sales activity" />
             </VBox>
-            <Button onAction="#onRefresh" styleClass="primary-button" text="Refresh Log"/>
+            <Button onAction="#onRefresh" styleClass="primary-button" text="Refresh Log" />
         </HBox>
         <VBox spacing="12.0" styleClass="content-panel" VBox.vgrow="ALWAYS">
-            <Label styleClass="section-title" text="Recorded Activity"/>
-            <ListView fx:id="lstAuditLog" styleClass="audit-list" VBox.vgrow="ALWAYS"/>
-            <Label fx:id="lblStatus" styleClass="status-label" text="Loading audit entries..."/>
+            <Label styleClass="section-title" text="Recorded Activity" />
+            <ListView fx:id="lstAuditLog" styleClass="audit-list" VBox.vgrow="ALWAYS" />
+            <Label fx:id="lblStatus" styleClass="status-label" text="Loading audit entries..." />
         </VBox>
     </VBox>
 </AnchorPane>

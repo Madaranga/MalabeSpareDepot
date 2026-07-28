@@ -14,7 +14,7 @@
     <VBox spacing="18.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="page-header">
             <VBox HBox.hgrow="ALWAYS">
-                <Label styleClass="app-title" text="Malabe Spare Depot" textFill="#f4f4f4" />
+                <Label style="-fx-text-fill: white;" styleClass="app-title" text="Malabe Spare Depot" textFill="#f4f4f4" />
                 <Label styleClass="page-subtitle" text="Inventory and sales management dashboard" />
             </VBox>
             <Label fx:id="lblCartCount" styleClass="summary-pill" text="Cart: 0" />

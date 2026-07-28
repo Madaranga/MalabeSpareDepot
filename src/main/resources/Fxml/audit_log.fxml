@@ -12,7 +12,7 @@
         <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="page-header">
             <Button onAction="#onBackToDashboard" styleClass="back-button" text="← Back to Dashboard" />
             <VBox HBox.hgrow="ALWAYS">
-                <Label styleClass="page-title" text="Audit Log" />
+                <Label style="-fx-text-fill: white;" styleClass="page-title" text="Audit Log" />
                 <Label styleClass="page-subtitle" text="Review recorded inventory and sales activity" />
             </VBox>
             <Button onAction="#onRefresh" styleClass="primary-button" text="Refresh Log" />

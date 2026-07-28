@@ -21,7 +21,7 @@
             <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="page-header">
                 <Button onAction="#onBackToDashboard" styleClass="back-button" text="← Back to Dashboard" />
                 <VBox>
-                    <Label styleClass="page-title" text="Inventory Management" />
+                    <Label style="-fx-text-fill: white;" styleClass="page-title" text="Inventory Management" />
                     <Label styleClass="page-subtitle" text="Add, edit, and remove spare parts" />
                 </VBox>
             </HBox>

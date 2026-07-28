@@ -14,7 +14,7 @@
             <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="page-header">
                 <Button onAction="#onBackToDashboard" styleClass="back-button" text="← Back to Dashboard" />
                 <VBox HBox.hgrow="ALWAYS">
-                    <Label styleClass="page-title" text="Low Stock" />
+                    <Label style="-fx-text-fill: white;" styleClass="page-title" text="Low Stock" />
                     <Label styleClass="page-subtitle" text="Monitor parts that require replenishment" />
                 </VBox>
                 <Button onAction="#onRefresh" styleClass="secondary-button" text="Refresh" />

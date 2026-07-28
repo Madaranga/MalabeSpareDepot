@@ -15,7 +15,7 @@
             <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="page-header">
                 <Button onAction="#onBackToDashboard" styleClass="back-button" text="← Back to Dashboard" />
                 <VBox HBox.hgrow="ALWAYS">
-                    <Label styleClass="page-title" text="Dealers" />
+                    <Label style="-fx-text-fill: white;" styleClass="page-title" text="Dealers" />
                     <Label styleClass="page-subtitle" text="View the existing dealer directory" />
                 </VBox>
                 <Label fx:id="lblDealerCount" styleClass="summary-pill" text="0 dealers" />

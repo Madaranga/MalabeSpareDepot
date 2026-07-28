@@ -15,7 +15,7 @@
         <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="page-header">
             <Button onAction="#onBackToDashboard" styleClass="back-button" text="← Back to Dashboard" />
             <VBox>
-                <Label styleClass="page-title" text="Sales &amp; Checkout" />
+                <Label style="-fx-text-fill: white;" styleClass="page-title" text="Sales &amp; Checkout" />
                 <Label styleClass="page-subtitle" text="Build a cart, select a dealer, and process a sale" />
             </VBox>
         </HBox>

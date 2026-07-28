@@ -9,76 +9,80 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1100.0" styleClass="root-pane"
-            xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/Fxml/1"
-            fx:controller="com.example.malabesparedepot.controller.InventoryController">
+<AnchorPane prefHeight="720.0" prefWidth="1100.0" styleClass="root-pane" stylesheets="@../Styles/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.malabesparedepot.controller.InventoryController">
     <children>
-        <VBox spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="page-header">
-                <Button onAction="#onBackToDashboard" styleClass="back-button"
-                        text="&#8592; Back to Dashboard"/>
+                <Button onAction="#onBackToDashboard" styleClass="back-button" text="← Back to Dashboard" />
                 <VBox>
-                    <Label styleClass="page-title" text="Inventory Management"/>
-                    <Label styleClass="page-subtitle" text="Add, edit, and remove spare parts"/>
+                    <Label styleClass="page-title" text="Inventory Management" />
+                    <Label styleClass="page-subtitle" text="Add, edit, and remove spare parts" />
                 </VBox>
             </HBox>
 
             <HBox spacing="16.0" styleClass="page-content" VBox.vgrow="ALWAYS">
                 <VBox prefWidth="370.0" spacing="12.0" styleClass="form-panel">
-                    <Label styleClass="section-title" text="Part Details"/>
+                    <Label styleClass="section-title" text="Part Details" />
                     <HBox spacing="8.0">
-                        <TextField fx:id="txtUpdateSearchCode" onAction="#onSearchItemForUpdate"
-                                   promptText="Search part code" HBox.hgrow="ALWAYS"/>
-                        <Button onAction="#onSearchItemForUpdate" styleClass="secondary-button" text="Find"/>
+                        <TextField fx:id="txtUpdateSearchCode" onAction="#onSearchItemForUpdate" promptText="Search part code" HBox.hgrow="ALWAYS" />
+                        <Button onAction="#onSearchItemForUpdate" styleClass="secondary-button" text="Find" />
                     </HBox>
                     <GridPane hgap="10.0" vgap="10.0">
-                        <padding><Insets top="4.0"/></padding>
-                        <Label text="Part Code" GridPane.rowIndex="0"/>
-                        <TextField fx:id="txtPartCode" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                        <Label text="Name" GridPane.rowIndex="1"/>
-                        <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                        <Label text="Brand" GridPane.rowIndex="2"/>
-                        <TextField fx:id="txtBrand" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                        <Label text="Price (Rs.)" GridPane.rowIndex="3"/>
-                        <TextField fx:id="txtPrice" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                        <Label text="Quantity" GridPane.rowIndex="4"/>
-                        <TextField fx:id="txtQty" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                        <Label text="Category" GridPane.rowIndex="5"/>
-                        <ComboBox fx:id="cmbCategory" prefWidth="210.0"
-                                  GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                        <padding><Insets top="4.0" /></padding>
+                        <Label text="Part Code" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtPartCode" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="Name" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Brand" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtBrand" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Price (Rs.)" GridPane.rowIndex="3" />
+                        <TextField fx:id="txtPrice" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Quantity" GridPane.rowIndex="4" />
+                        <TextField fx:id="txtQty" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="Category" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="cmbCategory" prefWidth="210.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <columnConstraints>
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                  </columnConstraints>
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
                     </GridPane>
                     <HBox alignment="CENTER_LEFT" spacing="12.0">
-                        <ImageView fx:id="imgPreview" fitHeight="90.0" fitWidth="130.0"
-                                   pickOnBounds="true" preserveRatio="true"/>
-                        <Button onAction="#onBrowseImage" styleClass="secondary-button"
-                                text="Choose Image"/>
+                        <ImageView fx:id="imgPreview" fitHeight="90.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" />
+                        <Button onAction="#onBrowseImage" styleClass="secondary-button" text="Choose Image" />
                     </HBox>
                     <HBox spacing="8.0">
-                        <Button onAction="#onAddPart" styleClass="success-button" text="Add"/>
-                        <Button onAction="#onUpdateStock" styleClass="primary-button" text="Update"/>
-                        <Button onAction="#onDeletePart" styleClass="danger-button" text="Delete"/>
-                        <Button onAction="#onClearForm" styleClass="secondary-button" text="Clear"/>
+                        <Button onAction="#onAddPart" styleClass="success-button" text="Add" />
+                        <Button onAction="#onUpdateStock" styleClass="primary-button" text="Update" />
+                        <Button onAction="#onDeletePart" styleClass="danger-button" text="Delete" />
+                        <Button onAction="#onClearForm" styleClass="secondary-button" text="Clear" />
                     </HBox>
-                    <Label fx:id="lblStatus" styleClass="status-label" text="Select a row to edit it."
-                           wrapText="true"/>
+                    <Label fx:id="lblStatus" styleClass="status-label" text="Select a row to edit it." wrapText="true" />
                 </VBox>
 
                 <VBox spacing="10.0" styleClass="content-panel" HBox.hgrow="ALWAYS">
-                    <Label styleClass="section-title" text="All Parts"/>
+                    <Label styleClass="section-title" text="All Parts" />
                     <TableView fx:id="tblInventory" VBox.vgrow="ALWAYS">
                         <columns>
-                            <TableColumn fx:id="colPartCode" prefWidth="90.0" text="Code"/>
-                            <TableColumn fx:id="colPartName" prefWidth="175.0" text="Name"/>
-                            <TableColumn fx:id="colPartBrand" prefWidth="110.0" text="Brand"/>
-                            <TableColumn fx:id="colPartPrice" prefWidth="100.0" text="Price"/>
-                            <TableColumn fx:id="colPartQty" prefWidth="85.0" text="Qty"/>
-                            <TableColumn fx:id="colPartCategory" prefWidth="120.0" text="Category"/>
+                            <TableColumn fx:id="colPartCode" prefWidth="90.0" text="Code" />
+                            <TableColumn fx:id="colPartName" prefWidth="175.0" text="Name" />
+                            <TableColumn fx:id="colPartBrand" prefWidth="110.0" text="Brand" />
+                            <TableColumn fx:id="colPartPrice" prefWidth="100.0" text="Price" />
+                            <TableColumn fx:id="colPartQty" prefWidth="85.0" text="Qty" />
+                            <TableColumn fx:id="colPartCategory" prefWidth="120.0" text="Category" />
                         </columns>
                     </TableView>
                 </VBox>

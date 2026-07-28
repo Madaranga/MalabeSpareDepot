@@ -7,33 +7,34 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
 
-public class App extends Application{
+public class App extends Application {
+
+    private static final String DASHBOARD_FXML = "/Fxml/dashboard.fxml";
+    private static final String STYLESHEET = "/Styles/style.css";
 
     @Override
-    public void start(Stage stage) {
-        try {
-            //Load fxml file
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Fxml/main_view.fxml"));
-            Parent root = fxmlLoader.load();
+    public void start(Stage stage) throws IOException {
+        URL dashboard = Objects.requireNonNull(
+                App.class.getResource(DASHBOARD_FXML),
+                "Missing required FXML resource: " + DASHBOARD_FXML
+        );
+        Parent root = new FXMLLoader(dashboard).load();
 
-            //Set up window size
-            Scene scene = new Scene(root, 850, 600);
+        Scene scene = new Scene(root, 1100, 720);
+        URL stylesheet = Objects.requireNonNull(
+                App.class.getResource(STYLESHEET),
+                "Missing required stylesheet: " + STYLESHEET
+        );
+        scene.getStylesheets().add(stylesheet.toExternalForm());
 
-            //Attach the stylesheet
-            String cssPath = getClass().getResource("/Styles/style.css").toExternalForm();
-            scene.getStylesheets().add(cssPath);
-
-
-            stage.setTitle("Malabe Spare Depot - Management System");
-            stage.setScene(scene);
-            stage.show();
-
-
-        } catch (IOException e) {
-            System.err.println("Error loading FXML file.");
-            e.printStackTrace();
-        }
+        stage.setTitle("Malabe Spare Depot - Management System");
+        stage.setMinWidth(900);
+        stage.setMinHeight(620);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {

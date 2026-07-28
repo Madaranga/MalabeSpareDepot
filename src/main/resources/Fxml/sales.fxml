@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1100.0" styleClass="root-pane" stylesheets="@../Styles/style.css" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.malabesparedepot.controller.SalesController">
+    <VBox spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="page-header">
+            <Button onAction="#onBackToDashboard" styleClass="back-button" text="← Back to Dashboard" />
+            <VBox>
+                <Label styleClass="page-title" text="Sales &amp; Checkout" />
+                <Label styleClass="page-subtitle" text="Build a cart, select a dealer, and process a sale" />
+            </VBox>
+        </HBox>
+
+        <HBox spacing="16.0" styleClass="page-content" VBox.vgrow="ALWAYS">
+            <VBox spacing="12.0" styleClass="content-panel" HBox.hgrow="ALWAYS">
+                <Label styleClass="section-title" text="Available Parts" />
+                <HBox spacing="8.0">
+                    <TextField fx:id="txtSearch" onAction="#onSearch" promptText="Search available parts..." HBox.hgrow="ALWAYS" />
+                    <Button onAction="#onSearch" styleClass="secondary-button" text="Search" />
+                </HBox>
+                <TableView fx:id="tblAvailableParts" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colPartCode" prefWidth="85.0" text="Code" />
+                        <TableColumn fx:id="colPartName" prefWidth="170.0" text="Name" />
+                        <TableColumn fx:id="colPartBrand" prefWidth="100.0" text="Brand" />
+                        <TableColumn fx:id="colPartPrice" prefWidth="95.0" text="Price" />
+                        <TableColumn fx:id="colPartStock" prefWidth="75.0" text="Stock" />
+                    </columns>
+                </TableView>
+                <HBox alignment="CENTER_LEFT" spacing="8.0">
+                    <Label text="Quantity" />
+                    <TextField fx:id="txtCartQty" prefWidth="90.0" promptText="Qty" />
+                    <Button onAction="#onAddToCart" styleClass="success-button" text="Add to Cart" />
+                </HBox>
+            </VBox>
+
+            <VBox prefWidth="455.0" spacing="12.0" styleClass="content-panel">
+                <Label styleClass="section-title" text="Active Cart" />
+                <TableView fx:id="tblCart" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colCartCode" prefWidth="75.0" text="Code" />
+                        <TableColumn fx:id="colCartName" prefWidth="145.0" text="Part" />
+                        <TableColumn fx:id="colCartQty" prefWidth="60.0" text="Qty" />
+                        <TableColumn fx:id="colCartSubtotal" prefWidth="105.0" text="Subtotal" />
+                    </columns>
+                </TableView>
+                <HBox spacing="8.0">
+                    <Button onAction="#onRemoveFromCart" styleClass="danger-button" text="Remove Selected" />
+                    <Button onAction="#onClearCart" styleClass="secondary-button" text="Clear Cart" />
+                </HBox>
+                <Label text="Select Dealer" />
+                <ComboBox fx:id="cmbDealer" maxWidth="Infinity" />
+                <Label fx:id="lblTotal" styleClass="total-label" text="Total: Rs. 0.00" />
+                <Button maxWidth="Infinity" onAction="#onCheckout" styleClass="checkout-button" text="Process Checkout" />
+                <Label fx:id="lblStatus" styleClass="status-label" text="Select a part to begin." wrapText="true" />
+            </VBox>
+        </HBox>
+    </VBox>
+</AnchorPane>

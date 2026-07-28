@@ -3,6 +3,7 @@ package com.example.malabesparedepot.util;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,4 +25,9 @@ public class LoggerUtil {
 
 
     }
+
+    public static Path getLogPath() {
+        return Path.of(LOG_FILE);
+    }
+
 }

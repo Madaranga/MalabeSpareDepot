@@ -8,7 +8,10 @@ public class SearchEngine {
 
     public static List<Part> filterInventory(List<Part> originalList, String category, double minPrice, double maxPrice, String keyword) {
         List<Part> filteredResult = new ArrayList<>();
-        String lowerKeyword = keyword.toLowerCase().trim();
+        if (originalList == null) {
+            throw new IllegalArgumentException("originalList cannot be null");
+        }
+        String lowerKeyword = keyword == null ? "" : keyword.toLowerCase().trim();
 
         for (Part part : originalList) {
             //

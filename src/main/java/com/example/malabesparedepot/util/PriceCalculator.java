@@ -22,10 +22,10 @@ public class PriceCalculator {
 
             //Track categories
             String category = item.getPart().getCategory().toUpperCase();
-            if (category.contains("Electrical")) {
+            if (category.contains("ELECTRICAL")) {
                 hasElectrical = true;
             }
-            if (category.contains("Engine")) {
+            if (category.contains("ENGINE")) {
                 hasEngine = true;
             }
         }
